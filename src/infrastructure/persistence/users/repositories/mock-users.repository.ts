@@ -2,11 +2,10 @@ import { User } from "@/domain/users/entities/user.entity";
 import type { UsersRepository } from "@/domain/users/repositories/users.repository";
 
 export class MockUsersRepository implements UsersRepository {
-  // private users: User[] = []
   private users: User[] = [
-    new User('1', 'John Doe', 'john.doe@example.com', 'password', new Date(), new Date()),
-    new User('2', 'Jane Doe', 'jane.doe@example.com', 'password', new Date(), new Date()),
-    new User('3', 'Jim Doe', 'jim.doe@example.com', 'password', new Date(), new Date()),
+    User.create('John Doe', 'john.doe@example.com', 'password'),
+    User.create('Jane Doe', 'jane.doe@example.com', 'password'),
+    User.create('Jim Doe', 'jim.doe@example.com', 'password'),
   ]
 
   async findAll(): Promise<User[]> {
@@ -15,6 +14,10 @@ export class MockUsersRepository implements UsersRepository {
 
   async findById(id: string): Promise<User | null> {
     return this.users.find((user) => user.id === id) || null
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.users.find((user) => user.email === email) || null
   }
 
   async create(user: User): Promise<User> {

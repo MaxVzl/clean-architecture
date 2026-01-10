@@ -8,8 +8,12 @@ import { CreateUserUseCase } from "@/application/users/use-cases/create-user.use
 import { CreateUserController } from "@/presentation/users/controllers/create-user.controller";
 import { DeleteUserController } from "@/presentation/users/controllers/delete-user.controller";
 import { DeleteUserUseCase } from "@/application/users/use-cases/delete-user.use-case";
+import { DrizzleUsersRepository } from "@/infrastructure/persistence/users/repositories/drizzle-users.repository";
+import { UpdateUserUseCase } from "@/application/users/use-cases/update-user.use-case";
+import { UpdateUserController } from "@/presentation/users/controllers/update-user.controller";
 
-const usersRepository = new MockUsersRepository();
+// const usersRepository = new MockUsersRepository();
+const usersRepository = new DrizzleUsersRepository();
 
 const getUsersUseCase = new GetUsersUseCase(
   usersRepository,
@@ -38,3 +42,10 @@ const deleteUserUseCase = new DeleteUserUseCase(
 );
 
 export const deleteUserController = new DeleteUserController(deleteUserUseCase);
+
+const updateUserUseCase = new UpdateUserUseCase(
+  usersRepository,
+  loggerService
+);
+
+export const updateUserController = new UpdateUserController(updateUserUseCase);

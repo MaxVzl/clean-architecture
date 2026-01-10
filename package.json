@@ -8,6 +8,13 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.8",
+    "@hono/swagger-ui": "^0.5.3",
+    "@hono/zod-openapi": "^1.2.0",
+    "@hono/zod-validator": "^0.7.6",
+    "@libsql/client": "^0.17.0",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-seed": "^0.3.1",
     "hono": "^4.11.3",
     "nodemailer": "^7.0.12",
     "zod": "^4.3.5"
@@ -15,7 +22,8 @@
   "devDependencies": {
     "@types/node": "^20.11.17",
     "@types/nodemailer": "^7.0.4",
-    "tsx": "^4.7.1",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3"
   }
 }

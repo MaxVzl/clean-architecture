@@ -1,11 +1,22 @@
 import { routes } from '@/presentation/http/routes'
 import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
+import { OpenAPIHono } from '@hono/zod-openapi'
+import { swaggerUI } from '@hono/swagger-ui'
 
-const app = new Hono()
+const app = new OpenAPIHono()
 
 app.route('/', routes)
+
+app.doc('/doc', {
+  openapi: '3.0.0',
+  info: {
+    version: '1.0.0',
+    title: 'My API'
+  }
+})
+
+app.get('/ui', swaggerUI({ url: '/doc' }))
 
 app.onError(globalErrorHandler)
 

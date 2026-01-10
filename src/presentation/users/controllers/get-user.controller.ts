@@ -1,11 +1,14 @@
-import type { Context } from "hono";
+import type { RouteHandler } from "@hono/zod-openapi";
+import type { GetUserRoute } from "@/presentation/users/routes/get-user.route";
 import { GetUserUseCase } from "@/application/users/use-cases/get-user.use-case";
+import { UserPresenter } from "@/presentation/users/presenters/user.presenter";
 
 export class GetUserController {
   constructor(private readonly getUserUseCase: GetUserUseCase) {}
 
-  public handle = async (c: Context) => {
+  public handle: RouteHandler<GetUserRoute> = async (c) => {
     const id = c.req.param('id')
-    return c.json(await this.getUserUseCase.execute(id), 200)
+    const user = await this.getUserUseCase.execute(id)
+    return c.json(UserPresenter.toResponse(user), 200)
   }
 }

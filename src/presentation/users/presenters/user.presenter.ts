@@ -1,0 +1,14 @@
+import type { User } from "@/domain/users/entities/user.entity";
+import type { UserSchema } from "@/presentation/users/schemas/user.schema";
+
+export class UserPresenter {
+  static toResponse(user: User): UserSchema {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    }
+  }
+}

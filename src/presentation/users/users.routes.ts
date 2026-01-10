@@ -1,30 +1,15 @@
-import { createUserController, deleteUserController, getUserController, getUsersController } from "@/presentation/users/users.factory"
-import { Hono, type Context } from "hono"
+import { createUserRoute } from "@/presentation/users/routes/create-user.route"
+import { deleteUserRoute } from "@/presentation/users/routes/delete-user.route"
+import { getUserRoute } from "@/presentation/users/routes/get-user.route"
+import { getUsersRoute } from "@/presentation/users/routes/get-users.route"
+import { updateUserRoute } from "@/presentation/users/routes/update-user.route"
+import { createUserController, deleteUserController, getUserController, getUsersController, updateUserController } from "@/presentation/users/users.factory"
+import { OpenAPIHono } from "@hono/zod-openapi"
 
-// interface CustomContext extends Context {
-//   Variables: {
-//     user: {
-//       id: string
-//       name: string
-//       email: string
-//     }
-//   }
-// }
+export const usersRoutes = new OpenAPIHono()
 
-// export const usersRoutes = new Hono<CustomContext>()
-export const usersRoutes = new Hono()
-
-usersRoutes.get('/', getUsersController.handle)
-usersRoutes.get('/:id', getUserController.handle)
-usersRoutes.post('/', createUserController.handle)
-usersRoutes.delete('/:id', deleteUserController.handle)
-// usersRoutes.use(async (c, next) => {
-//   console.log('middleware 1 start')
-//   c.set('user', {
-//     id: '1',
-//     name: 'John Doe',
-//     email: 'john.doe@example.com'
-//   })
-//   await next()
-//   console.log('middleware 1 end')
-// }).get('/:id/test', (c) => c.json({ message: 'test', test: c.req.param('id'), user: c.get('user') }, 200))
+usersRoutes.openapi(getUsersRoute, getUsersController.handle)
+usersRoutes.openapi(getUserRoute, getUserController.handle)
+usersRoutes.openapi(createUserRoute, createUserController.handle)
+usersRoutes.openapi(deleteUserRoute, deleteUserController.handle)
+usersRoutes.openapi(updateUserRoute, updateUserController.handle)
