@@ -5,7 +5,7 @@ import { createRoute } from "@hono/zod-openapi"
 export const getPostsByUserRoute = createRoute({
   method: 'get',
   path: '/{id}/posts',
-  tags: ['users'],
+  tags: ['posts'],
   summary: 'Retrieve the user posts',
   description: 'Retrieve the user posts',
   request: {
