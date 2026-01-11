@@ -1,3 +1,5 @@
+import { getPostsByUserController } from "@/presentation/posts/posts.factory"
+import { getPostsByUserRoute } from "@/presentation/posts/routes/get-posts-by-user.route"
 import { createUserRoute } from "@/presentation/users/routes/create-user.route"
 import { deleteUserRoute } from "@/presentation/users/routes/delete-user.route"
 import { getUserRoute } from "@/presentation/users/routes/get-user.route"
@@ -13,3 +15,4 @@ usersRoutes.openapi(getUserRoute, getUserController.handle)
 usersRoutes.openapi(createUserRoute, createUserController.handle)
 usersRoutes.openapi(deleteUserRoute, deleteUserController.handle)
 usersRoutes.openapi(updateUserRoute, updateUserController.handle)
+usersRoutes.openapi(getPostsByUserRoute, getPostsByUserController.handle)

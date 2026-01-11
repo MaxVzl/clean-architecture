@@ -1,12 +1,12 @@
+import { UUID } from "@/domain/common/value-objects/uuid.vo";
 import { Post } from "@/domain/posts/entities/post.entity";
 import type { PostsRepository } from "@/domain/posts/repositories/posts.repository";
 
 export class MockPostsRepository implements PostsRepository {
-  // private posts: Post[] = []
   private posts: Post[] = [
-    new Post('1', 'Title 1', 'Content 1', 'user1', new Date(), new Date()),
-    new Post('2', 'Title 2', 'Content 2', 'user2', new Date(), new Date()),
-    new Post('3', 'Title 3', 'Content 3', 'user3', new Date(), new Date()),
+    Post.create('Title 1', 'Content 1', UUID.generate()),
+    Post.create('Title 2', 'Content 2', UUID.generate()),
+    Post.create('Title 3', 'Content 3', UUID.generate()),
   ]
 
   async findAll(): Promise<Post[]> {
@@ -14,7 +14,7 @@ export class MockPostsRepository implements PostsRepository {
   }
 
   async findById(id: string): Promise<Post | null> {
-    return this.posts.find((post) => post.id === id) || null
+    return this.posts.find((post) => post.id.value === id) || null
   }
 
   async create(post: Post): Promise<Post> {
@@ -23,7 +23,7 @@ export class MockPostsRepository implements PostsRepository {
   }
 
   async update(post: Post): Promise<Post> {
-    const index = this.posts.findIndex((p) => p.id === post.id)
+    const index = this.posts.findIndex((p) => p.id.equals(post.id))
     if (index === -1) {
       throw new Error('Post not found')
     }
@@ -32,6 +32,6 @@ export class MockPostsRepository implements PostsRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.posts = this.posts.filter((post) => post.id !== id)
+    this.posts = this.posts.filter((post) => post.id.value !== id)
   }
 }

@@ -1,10 +1,13 @@
-import type { Context } from "hono";
-import type { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-case";
+import type { RouteHandler } from "@hono/zod-openapi";
+import { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-case";
+import { PostPresenter } from "@/presentation/posts/presenters/post.presenter";
+import type { GetPostsRoute } from "@/presentation/posts/routes/get-posts.route";
 
 export class GetPostsController {
   constructor(private readonly getPostsUseCase: GetPostsUseCase) {}
   
-  public handle = async (c: Context) => {
-    return c.json(await this.getPostsUseCase.execute())
+  public handle: RouteHandler<GetPostsRoute> = async (c) => {
+    const posts = await this.getPostsUseCase.execute()
+    return c.json(posts.map(PostPresenter.toResponse), 200)
   }
 }
