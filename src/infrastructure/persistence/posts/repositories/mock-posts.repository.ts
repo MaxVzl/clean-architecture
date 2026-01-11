@@ -17,6 +17,10 @@ export class MockPostsRepository implements PostsRepository {
     return this.posts.find((post) => post.id.value === id) || null
   }
 
+  async findByUserId(userId: string): Promise<Post[]> {
+    return this.posts.filter((post) => post.userId.value === userId)
+  }
+
   async create(post: Post): Promise<Post> {
     this.posts.push(post)
     return post

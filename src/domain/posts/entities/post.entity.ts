@@ -1,18 +1,20 @@
+import { Entity } from "@/domain/common/entity"
 import { UUID } from "@/domain/common/value-objects/uuid.vo"
 
-export class Post {
+export class Post extends Entity {
   private constructor(
-    public readonly id: UUID,
+    id: UUID,
     private _title: string,
     private _content: string,
     public readonly userId: UUID,
-    public readonly createdAt: Date,
-    private _updatedAt: Date,
-  ) {}
+    createdAt: Date,
+    updatedAt: Date,
+  ) {
+    super(id, createdAt, updatedAt)
+  }
 
   get title() { return this._title }
   get content() { return this._content }
-  get updatedAt() { return this._updatedAt }
 
   static create(title: string, content: string, userId: UUID): Post {
     return new Post(
@@ -39,6 +41,6 @@ export class Post {
   public update(title: string, content: string): void {
     this._title = title
     this._content = content
-    this._updatedAt = new Date()
+    this.touch()
   }
 }
