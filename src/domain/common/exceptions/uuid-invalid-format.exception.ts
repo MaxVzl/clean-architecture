@@ -1,9 +1,8 @@
-import { DomainException } from "@/domain/common/exceptions/domain.exception"
-import { DomainErrorType } from "@/domain/common/exceptions/error-types"
+import { InvalidArgumentException } from "@/domain/common/exceptions/invalid-argument.exception"
 
-export class UUIDInvalidFormatException extends DomainException {
+export class UUIDInvalidFormatException extends InvalidArgumentException {
   constructor(value: string) {
-    super(`UUID ${value} is invalid.`, DomainErrorType.INVALID_ARGUMENT)
+    super(`UUID ${value} is invalid.`)
     this.name = 'UUIDInvalidFormatException'
   }
 }

@@ -1,29 +1,37 @@
 import type { Context } from "hono";
 import type { HTTPResponseError } from "hono/types";
-import { DomainException } from "@/domain/common/exceptions/domain.exception";
-import { DomainErrorType } from "@/domain/common/exceptions/error-types";
-
-// Table de correspondance (Mapping) simple
-const statusMap: Record<DomainErrorType, number> = {
-  [DomainErrorType.NOT_FOUND]: 404,
-  [DomainErrorType.CONFLICT]: 409,
-  [DomainErrorType.INVALID_ARGUMENT]: 400,
-  [DomainErrorType.UNAUTHORIZED]: 403,
-  [DomainErrorType.INTERNAL]: 500,
-};
+import { NotFoundException } from "@/domain/common/exceptions/not-found.exception";
+import { ConflictException } from "@/domain/common/exceptions/conflict.exception";
+import { InvalidArgumentException } from "@/domain/common/exceptions/invalid-argument.exception";
+import { UnauthorizedException } from "@/domain/common/exceptions/unauthorized.exception";
+import { InternalException } from "@/domain/common/exceptions/internal.exception";
 
 export const globalErrorHandler = (err: Error | HTTPResponseError, c: Context) => {
-  // Si c'est une exception de notre Domain (Users, Posts, Invoices...)
-  if (err instanceof DomainException) {
-    const statusCode = statusMap[err.type] || 500;
-    
-    return c.json({
-      error: err.name,    // Ex: "UserNotFoundException"
-      message: err.message
-    }, statusCode as any);
+  // 1. Est-ce une erreur de type "Introuvable" ?
+  if (err instanceof NotFoundException) {
+    return c.json({ error: err.message }, 404);
   }
 
-  // Erreurs non gérées (bugs, crash DB...)
-  console.error(err);
+  // 2. Est-ce une erreur de type "Conflit" ?
+  if (err instanceof ConflictException) {
+    return c.json({ error: err.message }, 409);
+  }
+
+  // 3. Est-ce une erreur de type "Validation" ?
+  if (err instanceof InvalidArgumentException) {
+    return c.json({ error: err.message }, 400);
+  }
+
+  // 4. Est-ce une erreur de type "Non Autorisé" ?
+  if (err instanceof UnauthorizedException) {
+    return c.json({ error: err.message }, 403);
+  }
+
+  // 5. Est-ce une erreur de type "Interne" ?
+  if (err instanceof InternalException) {
+    return c.json({ error: err.message }, 500);
+  }
+
+  // Fallback
   return c.json({ error: "Internal Server Error" }, 500);
 };

@@ -1,9 +1,8 @@
-import { DomainException } from "@/domain/common/exceptions/domain.exception"
-import { DomainErrorType } from "@/domain/common/exceptions/error-types"
+import { InvalidArgumentException } from "@/domain/common/exceptions/invalid-argument.exception"
 
-export class UUIDRequiredException extends DomainException {
+export class UUIDRequiredException extends InvalidArgumentException {
   constructor(value: string) {
-    super(`UUID ${value} is required.`, DomainErrorType.INVALID_ARGUMENT)
+    super(`UUID ${value} is required.`)
     this.name = 'UUIDRequiredException'
   }
 }

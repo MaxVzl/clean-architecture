@@ -1,9 +1,8 @@
-import { DomainException } from "@/domain/common/exceptions/domain.exception"
-import { DomainErrorType } from "@/domain/common/exceptions/error-types"
+import { NotFoundException } from "@/domain/common/exceptions/not-found.exception"
 
-export class PostNotFoundException extends DomainException {
+export class PostNotFoundException extends NotFoundException {
   constructor(id: string) {
-    super(`Post with identifier ${id} was not found.`, DomainErrorType.NOT_FOUND)
+    super(`Post with identifier ${id} was not found.`)
     this.name = 'PostNotFoundException'
   }
 }

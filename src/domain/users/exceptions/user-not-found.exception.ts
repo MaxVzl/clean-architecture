@@ -1,9 +1,8 @@
-import { DomainException } from "@/domain/common/exceptions/domain.exception"
-import { DomainErrorType } from "@/domain/common/exceptions/error-types"
+import { NotFoundException } from "@/domain/common/exceptions/not-found.exception"
 
-export class UserNotFoundException extends DomainException {
+export class UserNotFoundException extends NotFoundException {
   constructor(idOrEmail: string) {
-    super(`User with identifier ${idOrEmail} was not found.`, DomainErrorType.NOT_FOUND)
+    super(`User with identifier ${idOrEmail} was not found.`)
     this.name = 'UserNotFoundException'
   }
 }

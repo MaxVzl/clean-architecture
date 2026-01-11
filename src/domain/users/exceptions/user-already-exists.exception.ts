@@ -1,9 +1,8 @@
-import { DomainException } from "@/domain/common/exceptions/domain.exception"
-import { DomainErrorType } from "@/domain/common/exceptions/error-types"
+import { ConflictException } from "@/domain/common/exceptions/conflict.exception"
 
-export class UserAlreadyExistsException extends DomainException {
+export class UserAlreadyExistsException extends ConflictException {
   constructor(email: string) {
-    super(`User with email ${email} already exists.`, DomainErrorType.CONFLICT)
+    super(`User with email ${email} already exists.`)
     this.name = 'UserAlreadyExistsException'
   }
 }
