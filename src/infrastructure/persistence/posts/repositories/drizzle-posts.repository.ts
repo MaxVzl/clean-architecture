@@ -1,6 +1,6 @@
 import { Post } from "@/domain/posts/entities/post.entity";
 import type { PostsRepository } from "@/domain/posts/repositories/posts.repository";
-import { postsTable } from "@/infrastructure/persistence/posts/entities/post.entity";
+import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity";
 import { drizzle } from "drizzle-orm/libsql";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";

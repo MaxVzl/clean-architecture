@@ -2,7 +2,7 @@ import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-
 import { drizzle } from "drizzle-orm/libsql"
 import { seed } from "drizzle-seed"
 import dotenv from "dotenv"
-import { postsTable } from "@/infrastructure/persistence/posts/entities/post.entity"
+import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity"
 
 dotenv.config()
 
