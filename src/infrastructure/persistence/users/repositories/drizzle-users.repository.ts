@@ -42,7 +42,7 @@ export class DrizzleUsersRepository implements UsersRepository {
 
   async update(user: User): Promise<User> {
     const userEntity = DrizzleUserMapper.toPersistence(user)
-    const [updatedUser] = await db.update(usersTable).set(userEntity).where(eq(usersTable.id, user.id)).returning()
+    const [updatedUser] = await db.update(usersTable).set(userEntity).where(eq(usersTable.id, user.id.value)).returning()
     return DrizzleUserMapper.toDomain(updatedUser)
   }
 

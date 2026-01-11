@@ -8,7 +8,22 @@ dotenv.config()
 
 async function main() {
   const db = drizzle(process.env.DB_FILE_NAME!)
-  await seed(db, { usersTable, postsTable })
+  await seed(db, { usersTable, postsTable }).refine((funcs) => ({
+    usersTable: {
+      columns: {
+        id: funcs.uuid(),
+        createdAt: funcs.date(),
+        updatedAt: funcs.date()
+      }
+    },
+    postsTable: {
+      columns: {
+        id: funcs.uuid(),
+        createdAt: funcs.date(),
+        updatedAt: funcs.date()
+      }
+    }
+  }))
 }
 
 main()

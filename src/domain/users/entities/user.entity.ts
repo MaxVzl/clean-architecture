@@ -1,8 +1,8 @@
-import { randomUUID } from "crypto"
+import { UUID } from "@/domain/common/value-objects/uuid.vo"
 
 export class User {
   private constructor(
-    public readonly id: string,
+    public readonly id: UUID,
     private _name: string,
     private _email: string,
     private _password: string,
@@ -17,7 +17,7 @@ export class User {
 
   static create(name: string, email: string, password: string): User {
     return new User(
-      randomUUID(),
+      UUID.generate(),
       name,
       email,
       password,
@@ -27,7 +27,7 @@ export class User {
   }
 
   static restore(
-    id: string,
+    id: UUID,
     name: string,
     email: string,
     password: string,

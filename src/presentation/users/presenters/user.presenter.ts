@@ -4,7 +4,7 @@ import type { UserSchema } from "@/presentation/users/schemas/user.schema";
 export class UserPresenter {
   static toResponse(user: User): UserSchema {
     return {
-      id: user.id,
+      id: user.id.value,
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,

@@ -13,7 +13,7 @@ export class MockUsersRepository implements UsersRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.users.find((user) => user.id === id) || null
+    return this.users.find((user) => user.id.value === id) || null
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -26,7 +26,7 @@ export class MockUsersRepository implements UsersRepository {
   }
 
   async update(user: User): Promise<User> {
-    const index = this.users.findIndex((u) => u.id === user.id)
+    const index = this.users.findIndex((u) => u.id.equals(user.id))
     if (index === -1) {
       throw new Error('User not found')
     }
@@ -35,6 +35,6 @@ export class MockUsersRepository implements UsersRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.users = this.users.filter((user) => user.id !== id)
+    this.users = this.users.filter((user) => user.id.value !== id)
   }
 }
