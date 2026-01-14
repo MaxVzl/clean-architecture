@@ -3,8 +3,13 @@ import { serve } from '@hono/node-server'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
+import { auth } from './auth'
 
 const app = new OpenAPIHono()
+
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+	return auth.handler(c.req.raw);
+});
 
 app.route('/', routes)
 
