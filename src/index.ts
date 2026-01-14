@@ -7,10 +7,6 @@ import { auth } from './auth'
 
 const app = new OpenAPIHono()
 
-app.on(["POST", "GET"], "/api/auth/*", (c) => {
-	return auth.handler(c.req.raw);
-});
-
 app.route('/', routes)
 
 app.doc('/doc', {
