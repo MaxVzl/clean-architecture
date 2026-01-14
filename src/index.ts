@@ -3,7 +3,6 @@ import { serve } from '@hono/node-server'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
-import { auth } from './auth'
 
 const app = new OpenAPIHono()
 

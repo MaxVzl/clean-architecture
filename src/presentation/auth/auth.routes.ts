@@ -1,8 +1,7 @@
-import { auth } from "@/auth";
+import { authController, signInController } from "@/presentation/auth/auth.factory";
 import { OpenAPIHono } from "@hono/zod-openapi"
 
 export const authRoutes = new OpenAPIHono()
 
-authRoutes.on(["POST", "GET"], "/*", (c) => {
-	return auth.handler(c.req.raw);
-});
+authRoutes.get("/sign-in", signInController.handle);
+// authRoutes.on(["POST", "GET"], "/*", authController.handle);
