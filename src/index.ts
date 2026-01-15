@@ -4,8 +4,11 @@ import { globalErrorHandler } from '@/presentation/http/errors/global-error-hand
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
 import { Scalar } from '@scalar/hono-api-reference'
+import { logger } from 'hono/logger'
 
 const app = new OpenAPIHono()
+
+app.use(logger())
 
 app.doc('/doc', {
   openapi: '3.0.0',
