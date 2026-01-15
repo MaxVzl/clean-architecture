@@ -1,14 +1,9 @@
 import { Post } from "@/domain/posts/entities/post.entity";
 import type { PostsRepository } from "@/domain/posts/repositories/posts.repository";
 import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity";
-import { drizzle } from "drizzle-orm/libsql";
-import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
 import { DrizzlePostMapper } from "@/infrastructure/persistence/posts/mappers/drizzle-post.mapper";
-
-dotenv.config()
-
-const db = drizzle(process.env.DB_FILE_NAME!);
+import { db } from "@/infrastructure/database";
 
 export class DrizzlePostsRepository implements PostsRepository {
   async findAll(): Promise<Post[]> {

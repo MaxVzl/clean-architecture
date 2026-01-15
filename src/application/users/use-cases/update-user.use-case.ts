@@ -21,7 +21,7 @@ export class UpdateUserUseCase {
         throw new UserAlreadyExistsException(updateUserDto.email)
       }
     }
-    existingUser.update(updateUserDto.name, updateUserDto.email)
+    existingUser.update(updateUserDto.name, updateUserDto.email, updateUserDto.emailVerified, updateUserDto.image)
     const updatedUser = await this.usersRepository.update(existingUser)
     this.loggerService.log(`Updated user ${updatedUser.id}`)
     return updatedUser

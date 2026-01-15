@@ -15,7 +15,7 @@ export class CreateUserUseCase {
     if (existingUser) {
       throw new UserAlreadyExistsException(createUserDto.email)
     }
-    const user = User.create(createUserDto.name, createUserDto.email, createUserDto.password)
+    const user = User.create(createUserDto.name, createUserDto.email, false, null)
     const createdUser = await this.usersRepository.create(user)
     this.loggerService.log(`Created user ${createdUser.id}`)
     return createdUser

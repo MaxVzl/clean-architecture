@@ -3,9 +3,9 @@ import type { UsersRepository } from "@/domain/users/repositories/users.reposito
 
 export class MockUsersRepository implements UsersRepository {
   private users: User[] = [
-    User.create('John Doe', 'john.doe@example.com', 'password'),
-    User.create('Jane Doe', 'jane.doe@example.com', 'password'),
-    User.create('Jim Doe', 'jim.doe@example.com', 'password'),
+    User.create('John Doe', 'john.doe@example.com', false, null),
+    User.create('Jane Doe', 'jane.doe@example.com', false, null),
+    User.create('Jim Doe', 'jim.doe@example.com', false, null),
   ]
 
   async findAll(): Promise<User[]> {

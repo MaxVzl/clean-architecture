@@ -3,10 +3,9 @@ import { serve } from '@hono/node-server'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
+import { Scalar } from '@scalar/hono-api-reference'
 
 const app = new OpenAPIHono()
-
-app.route('/', routes)
 
 app.doc('/doc', {
   openapi: '3.0.0',
@@ -16,7 +15,11 @@ app.doc('/doc', {
   }
 })
 
+app.get('/scalar', Scalar({ url: '/doc' }))
+
 app.get('/ui', swaggerUI({ url: '/doc' }))
+
+app.route('/', routes)
 
 app.onError(globalErrorHandler)
 

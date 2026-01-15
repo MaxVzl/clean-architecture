@@ -6,7 +6,8 @@ export class User extends Entity {
     id: UUID,
     private _name: string,
     private _email: string,
-    private _password: string,
+    private _emailVerified: boolean,
+    private _image: string | null,
     createdAt: Date,
     updatedAt: Date
   ) {
@@ -15,14 +16,16 @@ export class User extends Entity {
 
   get name() { return this._name }
   get email() { return this._email }
-  get password() { return this._password }
+  get emailVerified() { return this._emailVerified }
+  get image() { return this._image }
 
-  static create(name: string, email: string, password: string): User {
+  static create(name: string, email: string, emailVerified: boolean, image: string | null): User {
     return new User(
       UUID.generate(),
       name,
       email,
-      password,
+      emailVerified,
+      image,
       new Date(),
       new Date()
     )
@@ -32,7 +35,8 @@ export class User extends Entity {
     id: UUID,
     name: string,
     email: string,
-    password: string,
+    emailVerified: boolean,
+    image: string | null,
     createdAt: Date,
     updatedAt: Date
   ): User {
@@ -40,23 +44,18 @@ export class User extends Entity {
       id,
       name,
       email,
-      password,
+      emailVerified,
+      image,
       createdAt,
       updatedAt
     )
   }
 
-  public changePassword(newPasswordHash: string): void {
-    this._password = newPasswordHash
-    this.touch()
-  }
-
-  public update(name: string, email: string): void {
+  public update(name: string, email: string, emailVerified: boolean, image: string | null): void {
     this._name = name
     this._email = email
+    this._emailVerified = emailVerified
+    this._image = image
     this.touch()
   }
 }
-
-const user = User.create('John Doe', 'john.doe@example.com', 'password')
-console.log(user.name)

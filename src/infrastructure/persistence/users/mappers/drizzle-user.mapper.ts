@@ -8,9 +8,10 @@ export class DrizzleUserMapper {
       new UUID(user.id),
       user.name,
       user.email,
-      user.password,
-      new Date(user.createdAt),
-      new Date(user.updatedAt)
+      user.emailVerified,
+      user.image,
+      user.createdAt,
+      user.updatedAt
     )
   }
 
@@ -19,9 +20,10 @@ export class DrizzleUserMapper {
       id: user.id.value,
       name: user.name,
       email: user.email,
-      password: user.password,
-      createdAt: user.createdAt.toISOString(),
-      updatedAt: user.updatedAt.toISOString()
+      emailVerified: user.emailVerified,
+      image: user.image,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
     }
   }
 }

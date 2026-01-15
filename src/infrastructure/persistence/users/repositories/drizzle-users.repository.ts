@@ -1,14 +1,9 @@
 import { User } from "@/domain/users/entities/user.entity";
 import type { UsersRepository } from "@/domain/users/repositories/users.repository";
 import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
-import { drizzle } from "drizzle-orm/libsql";
-import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
 import { DrizzleUserMapper } from "@/infrastructure/persistence/users/mappers/drizzle-user.mapper";
-
-dotenv.config()
-
-const db = drizzle(process.env.DB_FILE_NAME!);
+import { db } from "@/infrastructure/database";
 
 export class DrizzleUsersRepository implements UsersRepository {
   async findAll(): Promise<User[]> {
