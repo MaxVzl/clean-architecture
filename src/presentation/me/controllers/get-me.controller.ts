@@ -7,7 +7,7 @@ import type { AuthMiddlewareVariables } from "@/presentation/common/middlewares/
 export class GetMeController {
   constructor(private readonly getUserUseCase: GetUserUseCase) {}
 
-  public handle: RouteHandler<GetMeRoute, { Variables: AuthMiddlewareVariables }> = async (c) => {
+  public handle: RouteHandler<GetMeRoute, AuthMiddlewareVariables> = async (c) => {
     const me = await this.getUserUseCase.execute(c.var.user!.id)
     return c.json(UserPresenter.toResponse(me), 200)
   }
