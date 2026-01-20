@@ -1,6 +1,4 @@
 import { AuthMiddleware } from "@/presentation/common/middlewares/auth.middleware";
-import { BetterAuthService } from "@/infrastructure/services/better-auth.service";
+import { authService } from "@/presentation/common/infrastructure.factory";
 
-const betterAuthService = new BetterAuthService();
-
-export const authMiddleware = new AuthMiddleware(betterAuthService);
+export const authMiddleware = new AuthMiddleware(authService);

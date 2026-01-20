@@ -1,3 +1,3 @@
 export interface LoggerService {
-  log(message: string): Promise<void>
+  log(message: string, data?: Record<string, unknown>): Promise<void>
 }

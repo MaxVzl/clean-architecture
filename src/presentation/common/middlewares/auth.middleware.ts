@@ -1,11 +1,12 @@
 import type { AuthService } from "@/application/common/interfaces/auth.service";
-import type { auth } from "@/infrastructure/config/better-auth.config";
+import type { AuthSessionDto } from "@/application/common/dto/auth-session.dto";
+import type { AuthUserDto } from "@/application/common/dto/auth-user.dto";
 import type { MiddlewareHandler } from "hono";
 
 export type AuthMiddlewareVariables = {
   Variables: {
-    user: typeof auth.$Infer.Session.user | null;
-    session: typeof auth.$Infer.Session.session | null;
+    user: AuthUserDto | null;
+    session: AuthSessionDto | null;
   }
 }
 
