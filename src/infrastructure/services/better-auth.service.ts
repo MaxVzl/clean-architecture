@@ -1,10 +1,10 @@
 import type { AuthService } from "@/application/common/interfaces/auth.service";
 import type { LoggerService } from "@/application/common/interfaces/logger.service";
-import { db } from "@/infrastructure/database";
 import { accountsTable } from "@/infrastructure/persistence/accounts/entities/drizzle-account.entity";
 import { sessionsTable } from "@/infrastructure/persistence/sessions/entities/drizzle-session.entity";
 import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
 import { verificationsTable } from "@/infrastructure/persistence/verifications/entities/drizzle-verification.entity";
+import type { DrizzleService } from "@/infrastructure/services/drizzle.service";
 import { betterAuth, type Session, type User } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";
@@ -13,10 +13,11 @@ export class BetterAuthService implements AuthService {
   private readonly _auth: ReturnType<typeof betterAuth>;
 
   constructor(
-    private readonly loggerService: LoggerService
+    private readonly loggerService: LoggerService,
+    private readonly drizzleService: DrizzleService
   ) {
     this._auth = betterAuth({
-      database: drizzleAdapter(db, { 
+      database: drizzleAdapter(this.drizzleService.db, { 
         provider: "sqlite",
         schema: {
           user: usersTable,

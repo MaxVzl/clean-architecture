@@ -5,6 +5,6 @@ export default defineConfig({
   schema: "./src/infrastructure/persistence/**/*.entity.ts",
   out: "./src/infrastructure/database/migrations",
   dbCredentials: {
-    url: "./local.db"
+    url: process.env.DB_FILE_NAME!
   }
 })
