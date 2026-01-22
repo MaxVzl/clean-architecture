@@ -1,9 +1,16 @@
 import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity"
 import { seed } from "drizzle-seed"
 import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity"
-import { db } from "@/infrastructure/database"
+import { createDatabase } from "@/infrastructure/database"
 
 async function main() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error('DATABASE_URL environment variable is required');
+  }
+
+  const db = createDatabase(databaseUrl);
+  
   await seed(db, { usersTable, postsTable }).refine((funcs) => ({
     usersTable: {
       columns: {
