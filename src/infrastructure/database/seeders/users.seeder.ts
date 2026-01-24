@@ -4,9 +4,9 @@ import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-
 import { createDatabase } from "@/infrastructure/database"
 
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL;
+  const databaseUrl = process.env.DB_FILE_NAME;
   if (!databaseUrl) {
-    throw new Error('DATABASE_URL environment variable is required');
+    throw new Error('DB_FILE_NAME environment variable is required');
   }
 
   const db = createDatabase(databaseUrl);

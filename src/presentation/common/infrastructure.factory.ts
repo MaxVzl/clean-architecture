@@ -7,9 +7,9 @@ import { createDatabase } from "@/infrastructure/database";
 
 export const emailService = new NodemailerEmailService();
 export const loggerService = new MyLoggerService();
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.DB_FILE_NAME;
 if (!databaseUrl) {
-  throw new Error('DATABASE_URL environment variable is required');
+  throw new Error('DB_FILE_NAME environment variable is required');
 }
 export const db = createDatabase(databaseUrl);
 export const authService = new BetterAuthService(loggerService, db);
