@@ -2,15 +2,14 @@ import { baseRoutes } from "@/presentation/base/base.routes"
 import { usersRoutes } from "@/presentation/users/users.routes"
 import { postsRoutes } from "@/presentation/posts/posts.routes"
 import { OpenAPIHono } from "@hono/zod-openapi"
-import { authRoutes } from "../auth/auth.routes"
 import { meRoutes } from "@/presentation/me/me.routes"
-import { authMiddleware } from "@/main.di"
+import { authMiddleware, authService } from "@/main.di"
 
 export const router = new OpenAPIHono()
 
 // Public routes
 router.route('/', baseRoutes)
-router.route('/api/auth', authRoutes)
+router.on(["POST", "GET"], '/api/auth/*', (c) => authService.handler(c.req.raw))
 
 const api = new OpenAPIHono();
 
