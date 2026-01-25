@@ -9,6 +9,6 @@ if (!databaseUrl) {
 }
 
 export const auth = new BetterAuthService(
-  new MyLoggerService(),
-  createDatabase(databaseUrl)
+  createDatabase(databaseUrl),
+  new MyLoggerService()
 ).auth;

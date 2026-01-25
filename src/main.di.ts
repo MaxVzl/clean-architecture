@@ -15,7 +15,7 @@ export const db = createDatabase(databaseUrl);
 // Services
 export const loggerService = new MyLoggerService();
 export const emailService = new NodemailerEmailService();
-export const authService = new BetterAuthService(loggerService, db);
+export const authService = new BetterAuthService(db, loggerService);
 
 // Repositories
 export const usersRepository = new DrizzleUsersRepository(db);

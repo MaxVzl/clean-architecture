@@ -10,8 +10,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";
 
 function createAuthInstance(
-  loggerService: LoggerService,
   db: DrizzleConnection,
+  loggerService: LoggerService,
 ) {
   return betterAuth({
     database: drizzleAdapter(db, { 
@@ -45,10 +45,10 @@ export class BetterAuthService implements AuthService {
   private readonly _auth: ReturnType<typeof createAuthInstance>;
 
   constructor(
-    private readonly loggerService: LoggerService,
-    private readonly db: DrizzleConnection
+    private readonly db: DrizzleConnection,
+    private readonly loggerService: LoggerService
   ) {
-    this._auth = createAuthInstance(this.loggerService, this.db);
+    this._auth = createAuthInstance(this.db, this.loggerService);
   }
 
   get auth() { return this._auth; }
