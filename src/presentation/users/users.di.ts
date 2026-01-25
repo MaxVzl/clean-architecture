@@ -1,6 +1,6 @@
 import { GetUsersController } from "@/presentation/users/controllers/get-users.controller"
 import { GetUsersUseCase } from "@/application/users/use-cases/get-users.use-case"
-import { loggerService, usersRepository } from "@/presentation/common/infrastructure.factory";
+import { loggerService, usersRepository } from "@/main.di";
 import { GetUserUseCase } from "@/application/users/use-cases/get-user.use-case";
 import { GetUserController } from "@/presentation/users/controllers/get-user.controller";
 import { CreateUserUseCase } from "@/application/users/use-cases/create-user.use-case";

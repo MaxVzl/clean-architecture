@@ -1,4 +1,4 @@
-import { routes } from '@/presentation/http/routes'
+import { router } from '@/presentation/http/routes'
 import { serve } from '@hono/node-server'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
 import { OpenAPIHono } from '@hono/zod-openapi'
@@ -22,7 +22,7 @@ app.get('/scalar', Scalar({ url: '/doc' }))
 
 app.get('/ui', swaggerUI({ url: '/doc' }))
 
-app.route('/', routes)
+app.route('/', router)
 
 app.onError(globalErrorHandler)
 

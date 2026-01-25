@@ -1,6 +1,6 @@
 import { GetPostsController } from "@/presentation/posts/controllers/get-posts.controller"
 import { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-case"
-import { loggerService, postsRepository, usersRepository } from "@/presentation/common/infrastructure.factory";
+import { loggerService, postsRepository, usersRepository } from "@/main.di";
 import { GetPostUseCase } from "@/application/posts/use-cases/get-post.use-case";
 import { GetPostController } from "@/presentation/posts/controllers/get-post.controller";
 import { GetPostsByUserUseCase } from "@/application/posts/use-cases/get-posts-by-user.use-case";

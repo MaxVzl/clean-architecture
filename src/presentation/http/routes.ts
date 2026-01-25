@@ -4,14 +4,21 @@ import { postsRoutes } from "@/presentation/posts/posts.routes"
 import { OpenAPIHono } from "@hono/zod-openapi"
 import { authRoutes } from "../auth/auth.routes"
 import { meRoutes } from "@/presentation/me/me.routes"
-import { authMiddleware } from "@/presentation/http/http.factory"
+import { authMiddleware } from "@/main.di"
 
-export const routes = new OpenAPIHono()
+export const router = new OpenAPIHono()
 
-routes.use(authMiddleware.handle)
+// Public routes
+router.route('/', baseRoutes)
+router.route('/api/auth', authRoutes)
 
-routes.route('/', baseRoutes)
-routes.route('/api/auth', authRoutes)
-routes.route('/users', usersRoutes)
-routes.route('/posts', postsRoutes)
-routes.route('/me', meRoutes)
+const api = new OpenAPIHono();
+
+// Protected routes
+api.use('/*', authMiddleware.handle)
+
+api.route('/users', usersRoutes)
+api.route('/posts', postsRoutes)
+api.route('/me', meRoutes)
+
+router.route('/', api)

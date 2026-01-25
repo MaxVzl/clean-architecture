@@ -1,4 +1,4 @@
-import { getPostController, getPostsController, createPostController, updatePostController, deletePostController } from "@/presentation/posts/posts.factory"
+import { getPostController, getPostsController, createPostController, updatePostController, deletePostController } from "@/presentation/posts/posts.di"
 import { getPostsRoute } from "@/presentation/posts/routes/get-posts.route"
 import { getPostRoute } from "@/presentation/posts/routes/get-post.route"
 import { createPostRoute } from "@/presentation/posts/routes/create-post.route"

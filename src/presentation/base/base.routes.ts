@@ -1,5 +1,5 @@
 import { Hono } from "hono"
-import { baseController } from "@/presentation/base/base.factory"
+import { baseController } from "@/presentation/base/base.di"
 
 export const baseRoutes = new Hono()
 
