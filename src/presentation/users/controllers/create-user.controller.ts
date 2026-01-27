@@ -3,12 +3,8 @@ import { UserPresenter } from "@/presentation/users/presenters/user.presenter";
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { CreateUserRoute } from "@/presentation/users/routes/create-user.route";
 
-export class CreateUserController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
-
-  public handle: RouteHandler<CreateUserRoute> = async (c) => {
-    const createUserDto = c.req.valid('json')
-    const user = await this.createUserUseCase.execute(createUserDto)
-    return c.json(UserPresenter.toResponse(user), 201)
-  }
+export const createUserController = (createUserUseCase: CreateUserUseCase): RouteHandler<CreateUserRoute> => async (c) => {
+  const createUserDto = c.req.valid('json')
+  const user = await createUserUseCase.execute(createUserDto)
+  return c.json(UserPresenter.toResponse(user), 201)
 }

@@ -1,57 +1,53 @@
-import { GetPostsController } from "@/presentation/posts/controllers/get-posts.controller"
-import { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-case"
-import { loggerService, postsRepository, usersRepository } from "@/main.di";
+import type { DIContainer } from "@/infrastructure/di/container";
+import { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-case";
 import { GetPostUseCase } from "@/application/posts/use-cases/get-post.use-case";
-import { GetPostController } from "@/presentation/posts/controllers/get-post.controller";
-import { GetPostsByUserUseCase } from "@/application/posts/use-cases/get-posts-by-user.use-case";
-import { GetPostsByUserController } from "@/presentation/posts/controllers/get-posts-by-user.controller";
 import { CreatePostUseCase } from "@/application/posts/use-cases/create-post.use-case";
-import { CreatePostController } from "@/presentation/posts/controllers/create-post.controller";
-import { UpdatePostUseCase } from "@/application/posts/use-cases/update-post.use-case";
-import { UpdatePostController } from "@/presentation/posts/controllers/update-post.controller";
 import { DeletePostUseCase } from "@/application/posts/use-cases/delete-post.use-case";
-import { DeletePostController } from "@/presentation/posts/controllers/delete-post.controller";
+import { UpdatePostUseCase } from "@/application/posts/use-cases/update-post.use-case";
+import { GetPostsByUserUseCase } from "@/application/posts/use-cases/get-posts-by-user.use-case";
 
-const getPostsUseCase = new GetPostsUseCase(
-  postsRepository,
-  loggerService
-);
+export function registerPostsModule(diContainer: DIContainer) {  
+  diContainer.register('GetPostsUseCase', (c) => {
+    return new GetPostsUseCase(
+      c.get('PostsRepository'),
+      c.get('LoggerService')
+    );
+  });
 
-export const getPostsController = new GetPostsController(getPostsUseCase);
+  diContainer.register('GetPostUseCase', (c) => {
+    return new GetPostUseCase(
+      c.get('PostsRepository'),
+      c.get('LoggerService')
+    );
+  });
 
-const getPostUseCase = new GetPostUseCase(
-  postsRepository,
-  loggerService
-);
+  diContainer.register('CreatePostUseCase', (c) => {
+    return new CreatePostUseCase(
+      c.get('PostsRepository'),
+      c.get('UsersRepository'),
+      c.get('LoggerService')
+    );
+  });
 
-export const getPostController = new GetPostController(getPostUseCase);
+  diContainer.register('DeletePostUseCase', (c) => {
+    return new DeletePostUseCase(
+      c.get('PostsRepository'),
+      c.get('LoggerService')
+    );
+  });
 
-const getPostsByUserUseCase = new GetPostsByUserUseCase(
-  postsRepository,
-  usersRepository,
-  loggerService
-);
+  diContainer.register('UpdatePostUseCase', (c) => {
+    return new UpdatePostUseCase(
+      c.get('PostsRepository'),
+      c.get('LoggerService')
+    );
+  });
 
-export const getPostsByUserController = new GetPostsByUserController(getPostsByUserUseCase);
-
-const createPostUseCase = new CreatePostUseCase(
-  postsRepository,
-  usersRepository,
-  loggerService
-);
-
-export const createPostController = new CreatePostController(createPostUseCase);
-
-const updatePostUseCase = new UpdatePostUseCase(
-  postsRepository,
-  loggerService
-);
-
-export const updatePostController = new UpdatePostController(updatePostUseCase);
-
-const deletePostUseCase = new DeletePostUseCase(
-  postsRepository,
-  loggerService
-);
-
-export const deletePostController = new DeletePostController(deletePostUseCase);
+  diContainer.register('GetPostsByUserUseCase', (c) => {
+    return new GetPostsByUserUseCase(
+      c.get('PostsRepository'),
+      c.get('UsersRepository'),
+      c.get('LoggerService')
+    );
+  });
+}

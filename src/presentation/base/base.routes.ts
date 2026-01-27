@@ -1,6 +1,7 @@
-import { Hono } from "hono"
-import { baseController } from "@/presentation/base/base.di"
+import { baseController } from "@/presentation/base/controllers/base.controller"
+import { baseRoute } from "@/presentation/base/routes/base.route"
+import { OpenAPIHono } from "@hono/zod-openapi"
 
-export const baseRoutes = new Hono()
+export const baseRoutes = new OpenAPIHono()
 
-baseRoutes.get('/', baseController.handle)
+baseRoutes.openapi(baseRoute, baseController)

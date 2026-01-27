@@ -3,12 +3,8 @@ import type { GetPostsByUserRoute } from "@/presentation/posts/routes/get-posts-
 import type { GetPostsByUserUseCase } from "@/application/posts/use-cases/get-posts-by-user.use-case";
 import { PostPresenter } from "@/presentation/posts/presenters/post.presenter";
 
-export class GetPostsByUserController {
-  constructor(private readonly getPostsByUserUseCase: GetPostsByUserUseCase) {}
-
-  public handle: RouteHandler<GetPostsByUserRoute> = async (c) => {
-    const id = c.req.param('id')
-    const posts = await this.getPostsByUserUseCase.execute(id)
-    return c.json(posts.map(PostPresenter.toResponse), 200)
-  }
+export const getPostsByUserController = (getPostsByUserUseCase: GetPostsByUserUseCase): RouteHandler<GetPostsByUserRoute> => async (c) => {
+  const id = c.req.param('id')
+  const posts = await getPostsByUserUseCase.execute(id)
+  return c.json(posts.map(PostPresenter.toResponse), 200)
 }

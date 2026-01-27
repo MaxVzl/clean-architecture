@@ -3,11 +3,7 @@ import { GetPostsUseCase } from "@/application/posts/use-cases/get-posts.use-cas
 import { PostPresenter } from "@/presentation/posts/presenters/post.presenter";
 import type { GetPostsRoute } from "@/presentation/posts/routes/get-posts.route";
 
-export class GetPostsController {
-  constructor(private readonly getPostsUseCase: GetPostsUseCase) {}
-  
-  public handle: RouteHandler<GetPostsRoute> = async (c) => {
-    const posts = await this.getPostsUseCase.execute()
-    return c.json(posts.map(PostPresenter.toResponse), 200)
-  }
+export const getPostsController = (getPostsUseCase: GetPostsUseCase): RouteHandler<GetPostsRoute> => async (c) => {
+  const posts = await getPostsUseCase.execute()
+  return c.json(posts.map(PostPresenter.toResponse), 200)
 }
