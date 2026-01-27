@@ -10,14 +10,18 @@ import { getUserController } from "@/presentation/users/controllers/get-user.con
 import { createUserController } from "@/presentation/users/controllers/create-user.controller"
 import { deleteUserController } from "@/presentation/users/controllers/delete-user.controller"
 import { updateUserController } from "@/presentation/users/controllers/update-user.controller"
-import { diContainer } from "@/main.di"
 import { getPostsByUserController } from "@/presentation/posts/controllers/get-posts-by-user.controller"
+import type { DIContainer } from "@/infrastructure/di/container"
 
-export const usersRoutes = new OpenAPIHono()
+export const usersRoutes = (diContainer: DIContainer) => {
+  const app = new OpenAPIHono()
 
-usersRoutes.openapi(getUsersRoute, getUsersController(diContainer.get('GetUsersUseCase')))
-usersRoutes.openapi(getUserRoute, getUserController(diContainer.get('GetUserUseCase')))
-usersRoutes.openapi(createUserRoute, createUserController(diContainer.get('CreateUserUseCase')))
-usersRoutes.openapi(deleteUserRoute, deleteUserController(diContainer.get('DeleteUserUseCase')))
-usersRoutes.openapi(updateUserRoute, updateUserController(diContainer.get('UpdateUserUseCase')))
-usersRoutes.openapi(getPostsByUserRoute, getPostsByUserController(diContainer.get('GetPostsByUserUseCase')))
+  app.openapi(getUsersRoute, getUsersController(diContainer.get('GetUsersUseCase')))
+  app.openapi(getUserRoute, getUserController(diContainer.get('GetUserUseCase')))
+  app.openapi(createUserRoute, createUserController(diContainer.get('CreateUserUseCase')))
+  app.openapi(deleteUserRoute, deleteUserController(diContainer.get('DeleteUserUseCase')))
+  app.openapi(updateUserRoute, updateUserController(diContainer.get('UpdateUserUseCase')))
+  app.openapi(getPostsByUserRoute, getPostsByUserController(diContainer.get('GetPostsByUserUseCase')))
+
+  return app
+}

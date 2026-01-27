@@ -2,8 +2,12 @@ import { OpenAPIHono } from "@hono/zod-openapi"
 import { getMeRoute } from "./routes/get-me.route"
 import type { AuthMiddlewareVariables } from "@/presentation/common/middlewares/auth.middleware"
 import { getMeController } from "@/presentation/me/controllers/get-me.controller"
-import { diContainer } from "@/main.di"
+import type { DIContainer } from "@/infrastructure/di/container"
 
-export const meRoutes = new OpenAPIHono<AuthMiddlewareVariables>()
+export const meRoutes = (diContainer: DIContainer) => {
+  const app = new OpenAPIHono<AuthMiddlewareVariables>()
 
-meRoutes.openapi(getMeRoute, getMeController(diContainer.get('GetUserUseCase')))
+  app.openapi(getMeRoute, getMeController(diContainer.get('GetUserUseCase')))
+
+  return app
+}

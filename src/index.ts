@@ -5,6 +5,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
 import { Scalar } from '@scalar/hono-api-reference'
 import { logger } from 'hono/logger'
+import { diContainer } from '@/main.di'
 
 const app = new OpenAPIHono()
 
@@ -22,7 +23,7 @@ app.get('/scalar', Scalar({ url: '/doc' }))
 
 app.get('/ui', swaggerUI({ url: '/doc' }))
 
-app.route('/', router)
+app.route('/', router(diContainer))
 
 app.onError(globalErrorHandler)
 
