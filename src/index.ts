@@ -5,7 +5,8 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
 import { Scalar } from '@scalar/hono-api-reference'
 import { logger } from 'hono/logger'
-import { diContainer } from '@/app.module'
+import { DIContainer } from '@/infrastructure/di/container'
+import { registerAppModule } from '@/app.module'
 
 const app = new OpenAPIHono()
 
@@ -22,6 +23,10 @@ app.doc('/doc', {
 app.get('/scalar', Scalar({ url: '/doc' }))
 
 app.get('/ui', swaggerUI({ url: '/doc' }))
+
+const diContainer = new DIContainer()
+
+registerAppModule(diContainer)
 
 app.route('/', router(diContainer))
 

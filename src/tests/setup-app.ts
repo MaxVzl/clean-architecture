@@ -4,7 +4,8 @@ import type { AuthUserDto } from "@/application/common/dto/auth-user.dto";
 import { MockPostsRepository } from "@/infrastructure/persistence/posts/repositories/mock-posts.repository";
 import { Hono } from "hono";
 import { router } from "@/presentation/http/router";
-import { diContainer } from "@/app.module";
+import { DIContainer } from "@/infrastructure/di/container";
+import { registerAppModule } from "@/app.module";
 
 const mockUser: AuthUserDto = {
   id: 'admin',
@@ -28,6 +29,10 @@ const mockSession: AuthSessionDto = {
 };
 
 export const createTestApp = () => {
+  const diContainer = new DIContainer()
+
+  registerAppModule(diContainer)
+
   diContainer.override('AuthService', {
     getSession: async (headers: Headers) => ({ 
       user: mockUser, 
