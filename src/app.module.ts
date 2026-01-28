@@ -14,7 +14,7 @@ diContainer.register('DrizzleConnection', () => {
   }
   return createDatabase(databaseUrl)
 });
-diContainer.register('LoggerService', () => new MyLoggerService());
+diContainer.register('LoggerService', () => process.env.NODE_ENV === 'test' ? new MyLoggerService() : new MyLoggerService());
 diContainer.register('AuthService', (c) => {
   return new BetterAuthService(
     c.get('DrizzleConnection'),
