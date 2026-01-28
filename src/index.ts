@@ -1,4 +1,4 @@
-import { router } from '@/presentation/http/routes'
+import { router } from '@/presentation/http/router'
 import { serve } from '@hono/node-server'
 import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
 import { OpenAPIHono } from '@hono/zod-openapi'
