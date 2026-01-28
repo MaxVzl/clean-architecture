@@ -4,7 +4,7 @@ import type { AuthMiddlewareVariables } from "@/presentation/common/middlewares/
 import { getMeController } from "@/presentation/me/controllers/get-me.controller"
 import type { DIContainer } from "@/infrastructure/di/container"
 
-export const meRoutes = (diContainer: DIContainer) => {
+export const meRouter = (diContainer: DIContainer) => {
   const app = new OpenAPIHono<AuthMiddlewareVariables>()
 
   app.openapi(getMeRoute, getMeController(diContainer.get('GetUserUseCase')))

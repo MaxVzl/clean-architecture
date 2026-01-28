@@ -1,8 +1,8 @@
-import { baseRoutes } from "@/presentation/base/base.routes"
-import { usersRoutes } from "@/presentation/users/users.routes"
-import { postsRoutes } from "@/presentation/posts/posts.routes"
+import { baseRouter } from "@/presentation/base/base.router"
+import { usersRouter } from "@/presentation/users/users.router"
+import { postsRouter } from "@/presentation/posts/posts.router"
 import { OpenAPIHono } from "@hono/zod-openapi"
-import { meRoutes } from "@/presentation/me/me.routes"
+import { meRouter } from "@/presentation/me/me.router"
 import { authMiddleware } from "@/presentation/common/middlewares/auth.middleware"
 import type { DIContainer } from "@/infrastructure/di/container"
 
@@ -10,7 +10,7 @@ export const router = (diContainer: DIContainer) => {
   const app = new OpenAPIHono()
 
   // Public routes
-  app.route('/', baseRoutes())
+  app.route('/', baseRouter())
   app.on(["POST", "GET"], '/api/auth/*', (c) => diContainer.get('AuthService').handler(c.req.raw))
 
   const api = new OpenAPIHono();
@@ -18,9 +18,9 @@ export const router = (diContainer: DIContainer) => {
   // Protected routes
   api.use('/*', authMiddleware(diContainer.get('AuthService')))
 
-  api.route('/users', usersRoutes(diContainer))
-  api.route('/posts', postsRoutes(diContainer))
-  api.route('/me', meRoutes(diContainer))
+  api.route('/users', usersRouter(diContainer))
+  api.route('/posts', postsRouter(diContainer))
+  api.route('/me', meRouter(diContainer))
 
   app.route('/', api)
 

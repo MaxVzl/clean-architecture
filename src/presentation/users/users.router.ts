@@ -13,7 +13,7 @@ import { updateUserController } from "@/presentation/users/controllers/update-us
 import { getPostsByUserController } from "@/presentation/posts/controllers/get-posts-by-user.controller"
 import type { DIContainer } from "@/infrastructure/di/container"
 
-export const usersRoutes = (diContainer: DIContainer) => {
+export const usersRouter = (diContainer: DIContainer) => {
   const app = new OpenAPIHono()
 
   app.openapi(getUsersRoute, getUsersController(diContainer.get('GetUsersUseCase')))

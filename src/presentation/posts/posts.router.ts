@@ -11,7 +11,7 @@ import { updatePostController } from "@/presentation/posts/controllers/update-po
 import { deletePostController } from "@/presentation/posts/controllers/delete-post.controller"
 import type { DIContainer } from "@/infrastructure/di/container"
 
-export const postsRoutes = (diContainer: DIContainer) => {
+export const postsRouter = (diContainer: DIContainer) => {
   const app = new OpenAPIHono()
 
   app.openapi(getPostsRoute, getPostsController(diContainer.get('GetPostsUseCase')))
