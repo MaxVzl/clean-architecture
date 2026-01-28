@@ -1,13 +1,12 @@
-import { DIContainer } from "@/infrastructure/di/container";
 import { registerUsersModule } from "@/presentation/users/users.di";
 import { MockUsersRepository } from "@/infrastructure/persistence/users/repositories/mock-users.repository";
-import { MyLoggerService } from "@/infrastructure/services/my-logger.service";
 import type { AuthSessionDto } from "@/application/common/dto/auth-session.dto";
 import type { AuthUserDto } from "@/application/common/dto/auth-user.dto";
 import { MockPostsRepository } from "@/infrastructure/persistence/posts/repositories/mock-posts.repository";
 import { registerPostsModule } from "@/presentation/posts/posts.di";
 import { Hono } from "hono";
 import { router } from "@/presentation/http/routes";
+import { diContainer } from "@/main.di";
 
 const mockUser: AuthUserDto = {
   id: 'admin',
@@ -31,28 +30,23 @@ const mockSession: AuthSessionDto = {
 };
 
 export const createTestApp = () => {
-  const testDiContainer = new DIContainer();
-
-  testDiContainer.register('AuthService', (c) => {
-    return {
-      getSession: async (headers: Headers) => ({ 
-        user: mockUser, 
-        session: mockSession 
-      }),
-      handler: async (raw: Request) => new Response('OK')
-    };
+  diContainer.override('AuthService', {
+    getSession: async (headers: Headers) => ({ 
+      user: mockUser, 
+      session: mockSession 
+    }),
+    handler: async (raw: Request) => new Response('OK')
   });
 
-  testDiContainer.register('LoggerService', (c) => new MyLoggerService())
-  testDiContainer.register('UsersRepository', (c) => new MockUsersRepository())
-  testDiContainer.register('PostsRepository', (c) => new MockPostsRepository())
+  diContainer.override('UsersRepository', new MockUsersRepository())
+  diContainer.override('PostsRepository', new MockPostsRepository())
 
-  registerUsersModule(testDiContainer);
-  registerPostsModule(testDiContainer);
+  registerUsersModule(diContainer);
+  registerPostsModule(diContainer);
 
   const app = new Hono();
 
-  app.route('/', router(testDiContainer));
+  app.route('/', router(diContainer));
   
   return app;
 };

@@ -64,4 +64,9 @@ export class DIContainer {
     this.instances[key] = instance;
     return instance;
   }
+
+  override<K extends keyof DIContainerTypes>(key: K, instance: DIContainerTypes[K]) {
+    this.instances[key] = instance;
+    delete this.factories[key]; 
+  }
 }
