@@ -1,9 +1,7 @@
-import { registerUsersModule } from "@/presentation/users/users.di";
 import { MockUsersRepository } from "@/infrastructure/persistence/users/repositories/mock-users.repository";
 import type { AuthSessionDto } from "@/application/common/dto/auth-session.dto";
 import type { AuthUserDto } from "@/application/common/dto/auth-user.dto";
 import { MockPostsRepository } from "@/infrastructure/persistence/posts/repositories/mock-posts.repository";
-import { registerPostsModule } from "@/presentation/posts/posts.di";
 import { Hono } from "hono";
 import { router } from "@/presentation/http/routes";
 import { diContainer } from "@/main.di";
@@ -40,9 +38,6 @@ export const createTestApp = () => {
 
   diContainer.override('UsersRepository', new MockUsersRepository())
   diContainer.override('PostsRepository', new MockPostsRepository())
-
-  registerUsersModule(diContainer);
-  registerPostsModule(diContainer);
 
   const app = new Hono();
 
