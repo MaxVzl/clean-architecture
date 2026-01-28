@@ -1,4 +1,4 @@
-import type { DIContainerTypes } from "@/infrastructure/di/definitions/types";
+import type { DIContainerTypes } from "@/infrastructure/di/types";
 
 export class DIContainer {
   private readonly factories: Record<string, (c: DIContainer) => any> = {};
