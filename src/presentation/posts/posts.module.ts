@@ -5,8 +5,17 @@ import { CreatePostUseCase } from "@/application/posts/use-cases/create-post.use
 import { DeletePostUseCase } from "@/application/posts/use-cases/delete-post.use-case";
 import { UpdatePostUseCase } from "@/application/posts/use-cases/update-post.use-case";
 import { GetPostsByUserUseCase } from "@/application/posts/use-cases/get-posts-by-user.use-case";
+import { DrizzlePostsRepository } from "@/infrastructure/persistence/posts/repositories/drizzle-posts.repository";
 
-export function registerPostsModule(diContainer: DIContainer) {  
+export function registerPostsModule(diContainer: DIContainer) {
+  // Repositories
+  diContainer.register('PostsRepository', (c) => {
+    return new DrizzlePostsRepository(
+      c.get('DrizzleConnection')
+    )
+  });
+
+  // Use cases
   diContainer.register('GetPostsUseCase', (c) => {
     return new GetPostsUseCase(
       c.get('PostsRepository'),

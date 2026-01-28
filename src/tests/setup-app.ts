@@ -4,7 +4,7 @@ import type { AuthUserDto } from "@/application/common/dto/auth-user.dto";
 import { MockPostsRepository } from "@/infrastructure/persistence/posts/repositories/mock-posts.repository";
 import { Hono } from "hono";
 import { router } from "@/presentation/http/router";
-import { diContainer } from "@/main.di";
+import { diContainer } from "@/app.module";
 
 const mockUser: AuthUserDto = {
   id: 'admin',

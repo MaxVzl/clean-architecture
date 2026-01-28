@@ -4,8 +4,6 @@ import type { DrizzleConnection } from "@/infrastructure/database";
 
 export interface SharedTypes {
   DrizzleConnection: DrizzleConnection;
-
-  // Services
   LoggerService: LoggerService;
   AuthService: AuthService;
 }

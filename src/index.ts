@@ -5,7 +5,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
 import { Scalar } from '@scalar/hono-api-reference'
 import { logger } from 'hono/logger'
-import { diContainer } from '@/main.di'
+import { diContainer } from '@/app.module'
 
 const app = new OpenAPIHono()
 

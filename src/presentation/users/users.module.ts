@@ -4,8 +4,17 @@ import { GetUserUseCase } from "@/application/users/use-cases/get-user.use-case"
 import { CreateUserUseCase } from "@/application/users/use-cases/create-user.use-case";
 import { DeleteUserUseCase } from "@/application/users/use-cases/delete-user.use-case";
 import { UpdateUserUseCase } from "@/application/users/use-cases/update-user.use-case";
+import { DrizzleUsersRepository } from "@/infrastructure/persistence/users/repositories/drizzle-users.repository";
 
-export function registerUsersModule(diContainer: DIContainer) {  
+export function registerUsersModule(diContainer: DIContainer) {
+  // Repositories
+  diContainer.register('UsersRepository', (c) => {
+    return new DrizzleUsersRepository(
+      c.get('DrizzleConnection')
+    )
+  });
+
+  // Use cases
   diContainer.register('GetUsersUseCase', (c) => {
     return new GetUsersUseCase(
       c.get('UsersRepository'),
