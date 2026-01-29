@@ -2,11 +2,7 @@ import { User } from "@/domain/users/entities/user.entity";
 import type { UsersRepository } from "@/domain/users/repositories/users.repository";
 
 export class MockUsersRepository implements UsersRepository {
-  private users: User[] = [
-    User.create('John Doe', 'john.doe@example.com', false, null),
-    User.create('Jane Doe', 'jane.doe@example.com', false, null),
-    User.create('Jim Doe', 'jim.doe@example.com', false, null),
-  ]
+  private users: User[] = []
 
   async findAll(): Promise<User[]> {
     return this.users

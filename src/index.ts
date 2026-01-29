@@ -1,38 +1,12 @@
-import { router } from '@/presentation/http/router'
 import { serve } from '@hono/node-server'
-import { globalErrorHandler } from '@/presentation/http/errors/global-error-handler'
-import { OpenAPIHono } from '@hono/zod-openapi'
-import { swaggerUI } from '@hono/swagger-ui'
-import { Scalar } from '@scalar/hono-api-reference'
-import { logger } from 'hono/logger'
 import { DIContainer } from '@/infrastructure/di/container'
 import { registerAppModule } from '@/app.module'
-
-const app = new OpenAPIHono()
-
-app.use(logger())
-
-app.doc('/doc', {
-  openapi: '3.0.0',
-  info: {
-    version: '1.0.0',
-    title: 'My API'
-  }
-})
-
-app.get('/scalar', Scalar({ url: '/doc' }))
-
-app.get('/ui', swaggerUI({ url: '/doc' }))
+import { createApp } from '@/presentation/app'
 
 const diContainer = new DIContainer()
-
 registerAppModule(diContainer)
 
-app.route('/', router(diContainer))
-
-app.onError(globalErrorHandler)
-
-app.notFound((c) => c.json({ error: 'Route Not Found' }, 404))
+const app = createApp(diContainer)
 
 serve({
   fetch: app.fetch,

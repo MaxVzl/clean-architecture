@@ -1,13 +1,8 @@
-import { UUID } from "@/domain/common/value-objects/uuid.vo";
 import { Post } from "@/domain/posts/entities/post.entity";
 import type { PostsRepository } from "@/domain/posts/repositories/posts.repository";
 
 export class MockPostsRepository implements PostsRepository {
-  private posts: Post[] = [
-    Post.create('Title 1', 'Content 1', UUID.generate()),
-    Post.create('Title 2', 'Content 2', UUID.generate()),
-    Post.create('Title 3', 'Content 3', UUID.generate()),
-  ]
+  private posts: Post[] = []
 
   async findAll(): Promise<Post[]> {
     return this.posts

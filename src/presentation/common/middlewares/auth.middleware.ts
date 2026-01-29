@@ -22,3 +22,11 @@ export const authMiddleware = (authService: AuthService): MiddlewareHandler<Auth
   c.set("session", session.session);
   await next();
 }
+
+export const requireAuthMiddleware: MiddlewareHandler<AuthMiddlewareVariables> = async (c, next) => {
+  const session = c.get("session");
+  if (!session) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+  await next();
+}
