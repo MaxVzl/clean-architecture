@@ -1,4 +1,4 @@
-import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
+import { usersTable } from "@/infrastructure/database/schemas/drizzle-user.schema";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 

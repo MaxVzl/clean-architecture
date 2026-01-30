@@ -1,6 +1,6 @@
 import { Post } from "@/domain/posts/entities/post.entity";
 import type { PostsRepository } from "@/domain/posts/repositories/posts.repository";
-import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity";
+import { postsTable } from "@/infrastructure/database/schemas/drizzle-post.schema";
 import { eq } from "drizzle-orm";
 import { DrizzlePostMapper } from "@/infrastructure/persistence/posts/mappers/drizzle-post.mapper";
 import { type DrizzleConnection } from "@/infrastructure/database";

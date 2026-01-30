@@ -1,6 +1,6 @@
 import { UUID } from "@/domain/common/value-objects/uuid.vo";
 import { User } from "@/domain/users/entities/user.entity";
-import type { DrizzleUser } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
+import type { DrizzleUser } from "@/infrastructure/database/schemas/drizzle-user.schema";
 
 export class DrizzleUserMapper {
   static toDomain(user: DrizzleUser): User {

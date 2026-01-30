@@ -1,6 +1,6 @@
-import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity"
+import { usersTable } from "@/infrastructure/database/schemas/drizzle-user.schema"
 import { seed } from "drizzle-seed"
-import { postsTable } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity"
+import { postsTable } from "@/infrastructure/database/schemas/drizzle-post.schema"
 import { createDatabase } from "@/infrastructure/database"
 
 async function main() {

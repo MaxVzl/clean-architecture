@@ -1,6 +1,6 @@
 import { User } from "@/domain/users/entities/user.entity";
 import type { UsersRepository } from "@/domain/users/repositories/users.repository";
-import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
+import { usersTable } from "@/infrastructure/database/schemas/drizzle-user.schema";
 import { eq } from "drizzle-orm";
 import { DrizzleUserMapper } from "@/infrastructure/persistence/users/mappers/drizzle-user.mapper";
 import { type DrizzleConnection } from "@/infrastructure/database";

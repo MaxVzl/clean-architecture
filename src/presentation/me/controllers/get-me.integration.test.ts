@@ -1,7 +1,7 @@
 import { User } from "@/domain/users/entities/user.entity"
 import { createApp } from "@/presentation/app"
-import { loginAs } from "@/tests/helpers/auth.helper"
-import { diContainer } from "@/tests/setup"
+import { loginAs } from "tests/helpers/auth.helper"
+import { diContainer } from "tests/setup"
 import { expect, test } from "vitest"
 
 test('get me integration with valid user id', async () => {

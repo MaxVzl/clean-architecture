@@ -1,10 +1,10 @@
 import type { AuthService } from "@/application/common/interfaces/auth.service";
 import type { LoggerService } from "@/application/common/interfaces/logger.service";
 import { type DrizzleConnection } from "@/infrastructure/database";
-import { accountsTable } from "@/infrastructure/persistence/accounts/entities/drizzle-account.entity";
-import { sessionsTable } from "@/infrastructure/persistence/sessions/entities/drizzle-session.entity";
-import { usersTable } from "@/infrastructure/persistence/users/entities/drizzle-user.entity";
-import { verificationsTable } from "@/infrastructure/persistence/verifications/entities/drizzle-verification.entity";
+import { accountsTable } from "@/infrastructure/database/schemas/drizzle-account.schema";
+import { sessionsTable } from "@/infrastructure/database/schemas/drizzle-session.schema";
+import { usersTable } from "@/infrastructure/database/schemas/drizzle-user.schema";
+import { verificationsTable } from "@/infrastructure/database/schemas/drizzle-verification.schema";
 import { betterAuth, type Session, type User } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";

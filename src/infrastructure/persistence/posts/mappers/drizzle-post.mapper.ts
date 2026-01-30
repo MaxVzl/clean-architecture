@@ -1,6 +1,6 @@
 import { UUID } from "@/domain/common/value-objects/uuid.vo";
 import { Post } from "@/domain/posts/entities/post.entity";
-import type { DrizzlePost } from "@/infrastructure/persistence/posts/entities/drizzle-post.entity";
+import type { DrizzlePost } from "@/infrastructure/database/schemas/drizzle-post.schema";
 
 export class DrizzlePostMapper {
   static toDomain(post: DrizzlePost): Post {
