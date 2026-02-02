@@ -1,5 +1,5 @@
-import { baseSchema } from "@/presentation/base/schemas/base.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { baseSchema } from '@/presentation/base/schemas/base.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const baseRoute = createRoute({
   method: 'get',
@@ -10,12 +10,12 @@ export const baseRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
-          schema: baseSchema
-        }
+        'application/json': {
+          schema: baseSchema,
+        },
       },
-      description: 'Retrieve the base'
-    }
-  }
-})
-export type BaseRoute = typeof baseRoute
+      description: 'Retrieve the base',
+    },
+  },
+});
+export type BaseRoute = typeof baseRoute;

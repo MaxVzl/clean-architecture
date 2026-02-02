@@ -1,5 +1,5 @@
-import { userSchema } from "@/presentation/users/schemas/user.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { userSchema } from '@/presentation/users/schemas/user.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const getUsersRoute = createRoute({
   method: 'get',
@@ -10,12 +10,12 @@ export const getUsersRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
-          schema: userSchema.array()
-        }
+        'application/json': {
+          schema: userSchema.array(),
+        },
       },
-      description: 'Retrieve the users'
-    }
-  }
-})
-export type GetUsersRoute = typeof getUsersRoute
+      description: 'Retrieve the users',
+    },
+  },
+});
+export type GetUsersRoute = typeof getUsersRoute;

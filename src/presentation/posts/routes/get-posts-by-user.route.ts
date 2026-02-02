@@ -1,6 +1,6 @@
-import { uuidParamSchema } from "@/presentation/common/schemas/params.schema"
-import { postSchema } from "@/presentation/posts/schemas/post.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { uuidParamSchema } from '@/presentation/common/schemas/params.schema';
+import { postSchema } from '@/presentation/posts/schemas/post.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const getPostsByUserRoute = createRoute({
   method: 'get',
@@ -9,17 +9,17 @@ export const getPostsByUserRoute = createRoute({
   summary: 'Retrieve the user posts',
   description: 'Retrieve the user posts',
   request: {
-    params: uuidParamSchema
+    params: uuidParamSchema,
   },
   responses: {
     200: {
       content: {
-        "application/json": {
-          schema: postSchema.array()
-        }
+        'application/json': {
+          schema: postSchema.array(),
+        },
       },
-      description: 'Retrieve the user posts'
-    }
-  }
-})
-export type GetPostsByUserRoute = typeof getPostsByUserRoute
+      description: 'Retrieve the user posts',
+    },
+  },
+});
+export type GetPostsByUserRoute = typeof getPostsByUserRoute;

@@ -1,9 +1,10 @@
-import { z } from '@hono/zod-openapi'
+import { z } from '@hono/zod-openapi';
 
-export const createPostSchema = z.object({
-  title: z.string().min(1),
-  content: z.string().min(1),
-  userId: z.string().min(1),
-}).openapi('CreatePostSchema')
-export type CreatePostSchema = z.infer<typeof createPostSchema>
-
+export const createPostSchema = z
+  .object({
+    title: z.string().min(1),
+    content: z.string().min(1),
+    userId: z.string().min(1),
+  })
+  .openapi('CreatePostSchema');
+export type CreatePostSchema = z.infer<typeof createPostSchema>;

@@ -1,5 +1,5 @@
-import { uuidParamSchema } from "@/presentation/common/schemas/params.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { uuidParamSchema } from '@/presentation/common/schemas/params.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const deleteUserRoute = createRoute({
   method: 'delete',
@@ -8,12 +8,12 @@ export const deleteUserRoute = createRoute({
   summary: 'Delete the user',
   description: 'Delete the user',
   request: {
-    params: uuidParamSchema
+    params: uuidParamSchema,
   },
   responses: {
     204: {
-      description: 'Delete the user'
-    }
-  }
-})
-export type DeleteUserRoute = typeof deleteUserRoute
+      description: 'Delete the user',
+    },
+  },
+});
+export type DeleteUserRoute = typeof deleteUserRoute;

@@ -1,12 +1,15 @@
-import type { Context } from "hono";
-import type { HTTPResponseError } from "hono/types";
-import { NotFoundException } from "@/domain/common/exceptions/not-found.exception";
-import { ConflictException } from "@/domain/common/exceptions/conflict.exception";
-import { InvalidArgumentException } from "@/domain/common/exceptions/invalid-argument.exception";
-import { UnauthorizedException } from "@/domain/common/exceptions/unauthorized.exception";
-import { InternalException } from "@/domain/common/exceptions/internal.exception";
+import type { Context } from 'hono';
+import type { HTTPResponseError } from 'hono/types';
+import { NotFoundException } from '@/domain/common/exceptions/not-found.exception';
+import { ConflictException } from '@/domain/common/exceptions/conflict.exception';
+import { InvalidArgumentException } from '@/domain/common/exceptions/invalid-argument.exception';
+import { UnauthorizedException } from '@/domain/common/exceptions/unauthorized.exception';
+import { InternalException } from '@/domain/common/exceptions/internal.exception';
 
-export const globalErrorHandler = (err: Error | HTTPResponseError, c: Context) => {
+export const globalErrorHandler = (
+  err: Error | HTTPResponseError,
+  c: Context,
+) => {
   // 1. Est-ce une erreur de type "Introuvable" ?
   if (err instanceof NotFoundException) {
     return c.json({ error: err.name, message: err.message }, 404);
@@ -33,5 +36,8 @@ export const globalErrorHandler = (err: Error | HTTPResponseError, c: Context) =
   }
 
   // Fallback
-  return c.json({ error: "InternalException", message: "Internal Server Error" }, 500);
+  return c.json(
+    { error: 'InternalException', message: 'Internal Server Error' },
+    500,
+  );
 };

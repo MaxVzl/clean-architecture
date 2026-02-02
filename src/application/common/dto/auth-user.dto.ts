@@ -6,4 +6,4 @@ export type AuthUserDto = {
   emailVerified: boolean;
   name: string;
   image?: string | null | undefined;
-}
+};

@@ -1,5 +1,5 @@
-import type { User } from "@/domain/users/entities/user.entity";
-import type { UserSchema } from "@/presentation/users/schemas/user.schema";
+import type { User } from '@/domain/users/entities/user.entity';
+import type { UserSchema } from '@/presentation/users/schemas/user.schema';
 
 export class UserPresenter {
   static toResponse(user: User): UserSchema {
@@ -11,6 +11,6 @@ export class UserPresenter {
       image: user.image,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    }
+    };
   }
 }

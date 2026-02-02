@@ -7,4 +7,4 @@ export type AuthSessionDto = {
   token: string;
   ipAddress?: string | null | undefined;
   userAgent?: string | null | undefined;
-}
+};

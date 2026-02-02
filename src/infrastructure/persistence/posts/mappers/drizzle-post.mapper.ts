@@ -1,6 +1,6 @@
-import { UUID } from "@/domain/common/value-objects/uuid.vo";
-import { Post } from "@/domain/posts/entities/post.entity";
-import type { DrizzlePost } from "@/infrastructure/database/schemas/drizzle-post.schema";
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
+import { Post } from '@/domain/posts/entities/post.entity';
+import type { DrizzlePost } from '@/infrastructure/database/schemas/drizzle-post.schema';
 
 export class DrizzlePostMapper {
   static toDomain(post: DrizzlePost): Post {
@@ -10,8 +10,8 @@ export class DrizzlePostMapper {
       post.content,
       new UUID(post.userId),
       new Date(post.createdAt),
-      new Date(post.updatedAt)
-    )
+      new Date(post.updatedAt),
+    );
   }
 
   static toPersistence(post: Post): DrizzlePost {
@@ -21,7 +21,7 @@ export class DrizzlePostMapper {
       content: post.content,
       userId: post.userId.value,
       createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString()
-    }
+      updatedAt: post.updatedAt.toISOString(),
+    };
   }
 }

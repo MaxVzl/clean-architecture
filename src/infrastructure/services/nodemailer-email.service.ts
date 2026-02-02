@@ -1,17 +1,17 @@
-import type { EmailService } from "@/application/common/interfaces/email.service";
-import nodemailer, { type Transporter } from "nodemailer";
+import type { EmailService } from '@/application/common/interfaces/email.service';
+import nodemailer, { type Transporter } from 'nodemailer';
 
 export class NodemailerEmailService implements EmailService {
   private readonly transporter: Transporter;
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+      host: 'smtp.ethereal.email',
       port: 587,
       secure: false, // Use true for port 465, false for port 587
       auth: {
-        user: "maddison53@ethereal.email",
-        pass: "jn7jnAPss4f63QBp6D",
+        user: 'maddison53@ethereal.email',
+        pass: 'jn7jnAPss4f63QBp6D',
       },
     });
   }
@@ -19,12 +19,12 @@ export class NodemailerEmailService implements EmailService {
   async send(to: string, subject: string, body: string): Promise<void> {
     const info = await this.transporter.sendMail({
       from: '"Fred Foo 👻" <foo@example.com>', // sender address
-      to: "bar@example.com, baz@example.com", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>", // html body
+      to: 'bar@example.com, baz@example.com', // list of receivers
+      subject: 'Hello ✔', // Subject line
+      text: 'Hello world?', // plain text body
+      html: '<b>Hello world?</b>', // html body
     });
 
-    console.log("Message sent: %s", info.messageId);
+    console.log('Message sent: %s', info.messageId);
   }
 }

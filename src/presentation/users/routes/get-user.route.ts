@@ -1,6 +1,6 @@
-import { uuidParamSchema } from "@/presentation/common/schemas/params.schema"
-import { userSchema } from "@/presentation/users/schemas/user.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { uuidParamSchema } from '@/presentation/common/schemas/params.schema';
+import { userSchema } from '@/presentation/users/schemas/user.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const getUserRoute = createRoute({
   method: 'get',
@@ -9,17 +9,17 @@ export const getUserRoute = createRoute({
   summary: 'Retrieve the user',
   description: 'Retrieve the user',
   request: {
-    params: uuidParamSchema
+    params: uuidParamSchema,
   },
   responses: {
     200: {
       content: {
-        "application/json": {
-          schema: userSchema
-        }
+        'application/json': {
+          schema: userSchema,
+        },
       },
-      description: 'Retrieve the user'
-    }
-  }
-})
-export type GetUserRoute = typeof getUserRoute
+      description: 'Retrieve the user',
+    },
+  },
+});
+export type GetUserRoute = typeof getUserRoute;

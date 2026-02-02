@@ -1,16 +1,16 @@
-import type { DIContainerTypes } from "@/infrastructure/di/types";
+import type { DIContainerTypes } from '@/infrastructure/di/types';
 
 export class DIContainer {
   private readonly factories: Record<string, (c: DIContainer) => any> = {};
   private readonly instances: Record<string, any> = {};
-  
+
   register<K extends keyof DIContainerTypes>(
-    key: K, 
-    factory: (c: DIContainer) => DIContainerTypes[K]
+    key: K,
+    factory: (c: DIContainer) => DIContainerTypes[K],
   ) {
     this.factories[key] = factory;
   }
-  
+
   get<K extends keyof DIContainerTypes>(key: K): DIContainerTypes[K] {
     if (this.instances[key]) {
       return this.instances[key];
@@ -24,8 +24,11 @@ export class DIContainer {
     return instance;
   }
 
-  override<K extends keyof DIContainerTypes>(key: K, instance: DIContainerTypes[K]) {
+  override<K extends keyof DIContainerTypes>(
+    key: K,
+    instance: DIContainerTypes[K],
+  ) {
     this.instances[key] = instance;
-    delete this.factories[key]; 
+    delete this.factories[key];
   }
 }

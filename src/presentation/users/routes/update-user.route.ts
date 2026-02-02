@@ -1,7 +1,7 @@
-import { updateUserSchema } from "@/presentation/users/schemas/update-user.schema"
-import { userSchema } from "@/presentation/users/schemas/user.schema"
-import { uuidParamSchema } from "@/presentation/common/schemas/params.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { updateUserSchema } from '@/presentation/users/schemas/update-user.schema';
+import { userSchema } from '@/presentation/users/schemas/user.schema';
+import { uuidParamSchema } from '@/presentation/common/schemas/params.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const updateUserRoute = createRoute({
   method: 'put',
@@ -13,22 +13,22 @@ export const updateUserRoute = createRoute({
     params: uuidParamSchema,
     body: {
       content: {
-        "application/json": {
-          schema: updateUserSchema
-        }
+        'application/json': {
+          schema: updateUserSchema,
+        },
       },
-      description: 'The user to update'
-    }
+      description: 'The user to update',
+    },
   },
   responses: {
     201: {
       content: {
-        "application/json": {
-          schema: userSchema
-        }
+        'application/json': {
+          schema: userSchema,
+        },
       },
-      description: 'Update the user'
-    }
-  }
-})
-export type UpdateUserRoute = typeof updateUserRoute
+      description: 'Update the user',
+    },
+  },
+});
+export type UpdateUserRoute = typeof updateUserRoute;

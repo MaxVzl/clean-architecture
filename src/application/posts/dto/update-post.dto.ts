@@ -1,5 +1,4 @@
 export type UpdatePostDto = {
-  title: string
-  content: string
-}
-
+  title: string;
+  content: string;
+};

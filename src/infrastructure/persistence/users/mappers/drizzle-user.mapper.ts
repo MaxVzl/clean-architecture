@@ -1,6 +1,6 @@
-import { UUID } from "@/domain/common/value-objects/uuid.vo";
-import { User } from "@/domain/users/entities/user.entity";
-import type { DrizzleUser } from "@/infrastructure/database/schemas/drizzle-user.schema";
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
+import { User } from '@/domain/users/entities/user.entity';
+import type { DrizzleUser } from '@/infrastructure/database/schemas/drizzle-user.schema';
 
 export class DrizzleUserMapper {
   static toDomain(user: DrizzleUser): User {
@@ -11,8 +11,8 @@ export class DrizzleUserMapper {
       user.emailVerified,
       user.image,
       user.createdAt,
-      user.updatedAt
-    )
+      user.updatedAt,
+    );
   }
 
   static toPersistence(user: User): DrizzleUser {
@@ -23,7 +23,7 @@ export class DrizzleUserMapper {
       emailVerified: user.emailVerified,
       image: user.image,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
-    }
+      updatedAt: user.updatedAt,
+    };
   }
 }

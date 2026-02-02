@@ -1,5 +1,5 @@
-import { Entity } from "@/domain/common/entity"
-import { UUID } from "@/domain/common/value-objects/uuid.vo"
+import { Entity } from '@/domain/common/entity';
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
 
 export class Post extends Entity {
   private constructor(
@@ -10,11 +10,15 @@ export class Post extends Entity {
     createdAt: Date,
     updatedAt: Date,
   ) {
-    super(id, createdAt, updatedAt)
+    super(id, createdAt, updatedAt);
   }
 
-  get title() { return this._title }
-  get content() { return this._content }
+  get title() {
+    return this._title;
+  }
+  get content() {
+    return this._content;
+  }
 
   static create(title: string, content: string, userId: UUID): Post {
     return new Post(
@@ -23,8 +27,8 @@ export class Post extends Entity {
       content,
       userId,
       new Date(),
-      new Date()
-    )
+      new Date(),
+    );
   }
 
   static restore(
@@ -33,14 +37,14 @@ export class Post extends Entity {
     content: string,
     userId: UUID,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
   ): Post {
-    return new Post(id, title, content, userId, createdAt, updatedAt)
+    return new Post(id, title, content, userId, createdAt, updatedAt);
   }
 
   public update(title: string, content: string): void {
-    this._title = title
-    this._content = content
-    this.touch()
+    this._title = title;
+    this._content = content;
+    this.touch();
   }
 }

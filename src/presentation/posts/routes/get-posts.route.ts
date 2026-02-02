@@ -1,5 +1,5 @@
-import { postSchema } from "@/presentation/posts/schemas/post.schema"
-import { createRoute } from "@hono/zod-openapi"
+import { postSchema } from '@/presentation/posts/schemas/post.schema';
+import { createRoute } from '@hono/zod-openapi';
 
 export const getPostsRoute = createRoute({
   method: 'get',
@@ -10,12 +10,12 @@ export const getPostsRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
-          schema: postSchema.array()
-        }
+        'application/json': {
+          schema: postSchema.array(),
+        },
       },
-      description: 'Retrieve the posts'
-    }
-  }
-})
-export type GetPostsRoute = typeof getPostsRoute
+      description: 'Retrieve the posts',
+    },
+  },
+});
+export type GetPostsRoute = typeof getPostsRoute;
