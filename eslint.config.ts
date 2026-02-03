@@ -18,7 +18,15 @@ export default defineConfig([
       prettier: prettierPlugin,
     },
     rules: {
-      'no-unused-vars': 'error',
+      // 'no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_', // Ignore les arguments qui commencent par _
+          varsIgnorePattern: '^_', // Ignore les variables qui commencent par _
+          caughtErrorsIgnorePattern: '^_', // Ignore les erreurs dans les catch
+        },
+      ],
       'no-undef': 'error',
       eqeqeq: 'error',
       'prettier/prettier': 'error',
