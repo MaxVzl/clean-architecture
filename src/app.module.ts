@@ -6,15 +6,16 @@ import { registerUsersModule } from '@/presentation/users/users.module';
 import { registerPostsModule } from '@/presentation/posts/posts.module';
 
 export function registerAppModule(diContainer: DIContainer) {
-  if (process.env.NODE_ENV !== 'test') {
-    diContainer.register('DrizzleConnection', () => {
-      const databaseUrl = process.env.DB_FILE_NAME;
-      if (!databaseUrl) {
-        throw new Error('DB_FILE_NAME environment variable is required');
-      }
-      return createDatabase(databaseUrl);
-    });
-  }
+  diContainer.register('DrizzleConnection', () => {
+    if (process.env.NODE_ENV === 'test') {
+      return createDatabase(':memory:');
+    }
+    const databaseUrl = process.env.DB_FILE_NAME;
+    if (!databaseUrl) {
+      throw new Error('DB_FILE_NAME environment variable is required');
+    }
+    return createDatabase(databaseUrl);
+  });
   diContainer.register('LoggerService', () =>
     process.env.NODE_ENV === 'test'
       ? new MyLoggerService()
