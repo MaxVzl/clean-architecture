@@ -38,4 +38,4 @@ jobs:
             echo "Build failed: dist directory not found"
             exit 1
           fi
-          echo "Build successful: dist directory created"
+          echo "Build successful: dist directory createde"
