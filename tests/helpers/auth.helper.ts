@@ -5,7 +5,7 @@ export const loginAs = (
   userId: string = 'user-1',
 ) => {
   diContainer.override('AuthService', {
-    getSession: async (headers: Headers) => ({
+    getSession: async () => ({
       user: {
         id: userId,
         createdAt: new Date(),
@@ -26,6 +26,6 @@ export const loginAs = (
         userAgent: null,
       },
     }),
-    handler: async (raw: Request) => new Response('OK'),
+    handler: async () => new Response('OK'),
   });
 };

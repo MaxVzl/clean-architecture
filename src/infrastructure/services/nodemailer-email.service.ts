@@ -16,7 +16,7 @@ export class NodemailerEmailService implements EmailService {
     });
   }
 
-  async send(to: string, subject: string, body: string): Promise<void> {
+  async send(): Promise<void> {
     const info = await this.transporter.sendMail({
       from: '"Fred Foo 👻" <foo@example.com>', // sender address
       to: 'bar@example.com, baz@example.com', // list of receivers

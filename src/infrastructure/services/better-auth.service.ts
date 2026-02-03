@@ -25,7 +25,7 @@ function createAuthInstance(
     }),
     emailAndPassword: {
       enabled: true,
-      sendResetPassword: async ({ user, url, token }, request) => {
+      sendResetPassword: async ({ user, url, token }) => {
         await loggerService.log(
           `Reset password email sent to ${user.email} with token ${token}`,
           { url, token },

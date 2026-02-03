@@ -1,6 +1,5 @@
-import { UUIDInvalidFormatException } from '@/domain/common/exceptions/uuid-invalid-format.exception';
 import { UUIDRequiredException } from '@/domain/common/exceptions/uuid-required.exception';
-import { v4 as uuidv4, validate } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export class UUID {
   constructor(public readonly value: string) {
