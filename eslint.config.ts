@@ -7,6 +7,15 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
   {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '**/*.test.ts',
+      '**/*.spec.ts',
+      'tests/**',
+    ],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: { globals: globals.node },
   },
