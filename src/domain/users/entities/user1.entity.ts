@@ -1,13 +1,13 @@
-import { Entity1 } from "@/domain/common/entity1";
-import { Email, emailSchema } from "@/domain/common/value-objects/email.vo";
-import { UUID } from "@/domain/common/value-objects/uuid.vo";
-import { z } from "zod";
+import { Entity1 } from '@/domain/common/entity1';
+import { Email, emailSchema } from '@/domain/common/value-objects/email.vo';
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
+import { z } from 'zod';
 
 export const createUser1Schema = z.object({
   name: z.string().min(1),
   email: emailSchema,
   password: z.string().min(8),
-})
+});
 
 interface User1Props {
   name: string;
@@ -28,28 +28,33 @@ export class User1 extends Entity1<User1Props> {
     const result = createUser1Schema.safeParse(props);
 
     if (!result.success) {
-      const errorMessage = result.error.issues.map(issue => issue.message).join(", ");
+      const errorMessage = result.error.issues
+        .map((issue) => issue.message)
+        .join(', ');
       throw new Error(`Validation Order échouée : ${errorMessage}`);
     }
 
     const data = result.data;
 
     const emailVO = Email.create(data.email);
-    
-    return new User1({
-      name: data.name,
-      email: emailVO,
-      password: data.password,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }, id);
+
+    return new User1(
+      {
+        name: data.name,
+        email: emailVO,
+        password: data.password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      id,
+    );
   }
 }
 
 const user1 = User1.create({
-  name: "John Doe",
-  email: "john.doe@example.com",
-  password: "password",
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  password: 'password',
 });
 
 console.log(user1);

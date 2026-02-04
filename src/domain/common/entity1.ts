@@ -1,4 +1,4 @@
-import { UUID } from "@/domain/common/value-objects/uuid.vo";
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
 
 export abstract class Entity1<T> {
   protected readonly _id: UUID;
@@ -9,11 +9,13 @@ export abstract class Entity1<T> {
     this.props = props;
   }
 
-  get id() { return this._id }
+  get id() {
+    return this._id;
+  }
 
   public equals(entity: Entity1<T>): boolean {
-    if (entity === null || entity === undefined) return false
-    if (this === entity) return true
-    return this._id.equals(entity._id)
+    if (entity === null || entity === undefined) return false;
+    if (this === entity) return true;
+    return this._id.equals(entity._id);
   }
 }
