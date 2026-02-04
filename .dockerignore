@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.github
+
+# Dependencies
+node_modules
+
+# Build artifacts (will be built in Docker)
+dist
+
+# Development files
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Environment files (should be passed as env vars or secrets)
+.env
+.env.local
+.env.*.local
+
+# Test files
+tests
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Documentation
+README.md
+*.md
+
+# CI/CD
+.github
+
+# Database files (should be mounted as volumes)
+*.db
+*.sqlite
+local.db
+
+# Misc
+coverage
+.nyc_output
+
