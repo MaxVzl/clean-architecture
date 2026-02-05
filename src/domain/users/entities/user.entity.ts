@@ -31,7 +31,7 @@ export class User extends Entity1<UserProps> {
       const errorMessage = result.error.issues
         .map((issue) => issue.message)
         .join(', ');
-      throw new Error(`Validation Order échouée : ${errorMessage}`);
+      throw new Error(`Validation User échouée : ${errorMessage}`);
     }
 
     const data = result.data;
