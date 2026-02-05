@@ -48,7 +48,7 @@ export class DrizzlePostsRepository implements PostsRepository {
     const [updatedUser] = await this.db
       .update(postsTable)
       .set(postEntity)
-      .where(eq(postsTable.id, post.id.value))
+      .where(eq(postsTable.id, post.id.props.value))
       .returning();
     return DrizzlePostMapper.toDomain(updatedUser);
   }

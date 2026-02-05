@@ -1,50 +1,59 @@
-import { Entity } from '@/domain/common/entity';
+import { Entity1 } from '@/domain/common/entity1';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
+import z from 'zod';
 
-export class Post extends Entity {
-  private constructor(
-    id: UUID,
-    private _title: string,
-    private _content: string,
-    public readonly userId: UUID,
-    createdAt: Date,
-    updatedAt: Date,
-  ) {
-    super(id, createdAt, updatedAt);
+export const createPostSchema = z.object({
+  title: z.string().min(1),
+  content: z.string().min(1),
+  userId: z.string(),
+});
+
+export type CreatePostDTO = z.infer<typeof createPostSchema>;
+
+interface PostProps {
+  title: string;
+  content: string;
+  userId: UUID;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export class Post extends Entity1<PostProps> {
+  private constructor(props: PostProps, id?: UUID) {
+    super(props, id);
   }
 
-  get title() {
-    return this._title;
-  }
-  get content() {
-    return this._content;
-  }
+  static create(props: CreatePostDTO, id?: UUID): Post {
+    const result = createPostSchema.safeParse(props);
 
-  static create(title: string, content: string, userId: UUID): Post {
+    if (!result.success) {
+      const errorMessage = result.error.issues
+        .map((issue) => issue.message)
+        .join(', ');
+      throw new Error(`Validation Post échouée : ${errorMessage}`);
+    }
+
+    const data = result.data;
+
+    const userIdVO = UUID.create(data.userId);
+
     return new Post(
-      UUID.generate(),
-      title,
-      content,
-      userId,
-      new Date(),
-      new Date(),
+      {
+        title: data.title,
+        content: data.content,
+        userId: userIdVO,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      id,
     );
   }
 
-  static restore(
-    id: UUID,
-    title: string,
-    content: string,
-    userId: UUID,
-    createdAt: Date,
-    updatedAt: Date,
-  ): Post {
-    return new Post(id, title, content, userId, createdAt, updatedAt);
+  static restore(id: UUID, props: PostProps): Post {
+    return new Post(props, id);
   }
 
   public update(title: string, content: string): void {
-    this._title = title;
-    this._content = content;
-    this.touch();
+    this.props = { ...this.props, title, content, updatedAt: new Date() };
   }
 }

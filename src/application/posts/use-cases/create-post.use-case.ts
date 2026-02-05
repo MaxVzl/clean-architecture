@@ -17,11 +17,11 @@ export class CreatePostUseCase {
     if (!user) {
       throw new UserNotFoundException(createPostDto.userId);
     }
-    const post = Post.create(
-      createPostDto.title,
-      createPostDto.content,
-      user.id,
-    );
+    const post = Post.create({
+      title: createPostDto.title,
+      content: createPostDto.content,
+      userId: user.id.props.value,
+    });
     const createdPost = await this.postsRepository.create(post);
     this.loggerService.log(`Created post ${createdPost.id}`);
     return createdPost;

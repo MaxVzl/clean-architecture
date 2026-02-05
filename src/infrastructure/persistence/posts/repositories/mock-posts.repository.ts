@@ -9,11 +9,13 @@ export class MockPostsRepository implements PostsRepository {
   }
 
   async findById(id: string): Promise<Post | null> {
-    return this.posts.find((post) => post.id.value === id) || null;
+    return this.posts.find((post) => post.id.props.value === id) || null;
   }
 
   async findByUserId(userId: string): Promise<Post[]> {
-    return this.posts.filter((post) => post.userId.value === userId);
+    return this.posts.filter(
+      (post) => post.props.userId.props.value === userId,
+    );
   }
 
   async create(post: Post): Promise<Post> {
@@ -31,6 +33,6 @@ export class MockPostsRepository implements PostsRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.posts = this.posts.filter((post) => post.id.value !== id);
+    this.posts = this.posts.filter((post) => post.id.props.value !== id);
   }
 }

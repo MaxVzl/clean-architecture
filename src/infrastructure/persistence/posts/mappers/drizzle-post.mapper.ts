@@ -4,24 +4,23 @@ import type { DrizzlePost } from '@/infrastructure/database/schemas/drizzle-post
 
 export class DrizzlePostMapper {
   static toDomain(post: DrizzlePost): Post {
-    return Post.restore(
-      new UUID(post.id),
-      post.title,
-      post.content,
-      new UUID(post.userId),
-      new Date(post.createdAt),
-      new Date(post.updatedAt),
-    );
+    return Post.restore(UUID.create(post.id), {
+      title: post.title,
+      content: post.content,
+      userId: UUID.create(post.userId),
+      createdAt: new Date(post.createdAt),
+      updatedAt: new Date(post.updatedAt),
+    });
   }
 
   static toPersistence(post: Post): DrizzlePost {
     return {
-      id: post.id.value,
-      title: post.title,
-      content: post.content,
-      userId: post.userId.value,
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString(),
+      id: post.id.props.value,
+      title: post.props.title,
+      content: post.props.content,
+      userId: post.props.userId.props.value,
+      createdAt: post.props.createdAt.toISOString(),
+      updatedAt: post.props.updatedAt.toISOString(),
     };
   }
 }
