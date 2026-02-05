@@ -1,4 +1,4 @@
-import { Entity1 } from '@/domain/common/entity1';
+import { Entity } from '@/domain/common/entity';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
 import z from 'zod';
 
@@ -18,7 +18,7 @@ interface PostProps {
   updatedAt: Date;
 }
 
-export class Post extends Entity1<PostProps> {
+export class Post extends Entity<PostProps> {
   private constructor(props: PostProps, id?: UUID) {
     super(props, id);
   }

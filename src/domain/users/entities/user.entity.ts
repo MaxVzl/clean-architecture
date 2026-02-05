@@ -1,4 +1,4 @@
-import { Entity1 } from '@/domain/common/entity1';
+import { Entity } from '@/domain/common/entity';
 import { Email, emailSchema } from '@/domain/common/value-objects/email.vo';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
 import { z } from 'zod';
@@ -19,7 +19,7 @@ interface UserProps {
   updatedAt: Date;
 }
 
-export class User extends Entity1<UserProps> {
+export class User extends Entity<UserProps> {
   private constructor(props: UserProps, id?: UUID) {
     super(props, id);
   }
