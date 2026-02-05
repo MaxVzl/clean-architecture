@@ -51,7 +51,7 @@ export class DrizzleUsersRepository implements UsersRepository {
     const [updatedUser] = await this.db
       .update(usersTable)
       .set(userEntity)
-      .where(eq(usersTable.id, user.id.value))
+      .where(eq(usersTable.id, user.id.props.value))
       .returning();
     return DrizzleUserMapper.toDomain(updatedUser);
   }

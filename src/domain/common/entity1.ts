@@ -2,7 +2,7 @@ import { UUID } from '@/domain/common/value-objects/uuid.vo';
 
 export abstract class Entity1<T> {
   protected readonly _id: UUID;
-  public readonly props: T;
+  private _props!: T;
 
   constructor(props: T, id?: UUID) {
     this._id = id ?? UUID.generate();
@@ -11,6 +11,14 @@ export abstract class Entity1<T> {
 
   get id() {
     return this._id;
+  }
+
+  public get props(): T {
+    return this._props;
+  }
+
+  protected set props(value: T) {
+    this._props = Object.freeze(value);
   }
 
   public equals(entity: Entity1<T>): boolean {

@@ -17,12 +17,10 @@ export class CreateUserUseCase {
     if (existingUser) {
       throw new UserAlreadyExistsException(createUserDto.email);
     }
-    const user = User.create(
-      createUserDto.name,
-      createUserDto.email,
-      false,
-      null,
-    );
+    const user = User.create({
+      name: createUserDto.name,
+      email: createUserDto.email,
+    });
     const createdUser = await this.usersRepository.create(user);
     this.loggerService.log(`Created user ${createdUser.id}`);
     return createdUser;

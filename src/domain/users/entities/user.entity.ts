@@ -1,79 +1,65 @@
-import { Entity } from '@/domain/common/entity';
+import { Entity1 } from '@/domain/common/entity1';
+import { Email, emailSchema } from '@/domain/common/value-objects/email.vo';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
+import { z } from 'zod';
 
-export class User extends Entity {
-  private constructor(
-    id: UUID,
-    private _name: string,
-    private _email: string,
-    private _emailVerified: boolean,
-    private _image: string | null,
-    createdAt: Date,
-    updatedAt: Date,
-  ) {
-    super(id, createdAt, updatedAt);
-  }
+export const createUserSchema = z.object({
+  name: z.string().min(1),
+  email: emailSchema,
+});
 
-  get name() {
-    return this._name;
-  }
-  get email() {
-    return this._email;
-  }
-  get emailVerified() {
-    return this._emailVerified;
-  }
-  get image() {
-    return this._image;
+export type CreateUserDTO = z.infer<typeof createUserSchema>;
+
+interface UserProps {
+  name: string;
+  email: Email;
+  emailVerified: boolean;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export class User extends Entity1<UserProps> {
+  private constructor(props: UserProps, id?: UUID) {
+    super(props, id);
   }
 
-  static create(
-    name: string,
-    email: string,
-    emailVerified: boolean,
-    image: string | null,
-  ): User {
+  static create(props: CreateUserDTO, id?: UUID): User {
+    const result = createUserSchema.safeParse(props);
+
+    if (!result.success) {
+      const errorMessage = result.error.issues
+        .map((issue) => issue.message)
+        .join(', ');
+      throw new Error(`Validation Order échouée : ${errorMessage}`);
+    }
+
+    const data = result.data;
+
+    const emailVO = Email.create(data.email);
+
     return new User(
-      UUID.generate(),
-      name,
-      email,
-      emailVerified,
-      image,
-      new Date(),
-      new Date(),
-    );
-  }
-
-  static restore(
-    id: UUID,
-    name: string,
-    email: string,
-    emailVerified: boolean,
-    image: string | null,
-    createdAt: Date,
-    updatedAt: Date,
-  ): User {
-    return new User(
+      {
+        name: data.name,
+        email: emailVO,
+        emailVerified: false,
+        image: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
       id,
-      name,
-      email,
-      emailVerified,
-      image,
-      createdAt,
-      updatedAt,
     );
   }
 
-  public update(
-    name: string,
-    email: string,
-    emailVerified: boolean,
-    image: string | null,
-  ): void {
-    this._name = name;
-    this._email = email;
-    this._emailVerified = emailVerified;
-    this._image = image;
-    this.touch();
+  static restore(id: UUID, props: UserProps): User {
+    return new User(props, id);
+  }
+
+  public changeEmail(email: Email): void {
+    this.props = {
+      ...this.props,
+      email: email,
+      updatedAt: new Date(),
+    };
   }
 }

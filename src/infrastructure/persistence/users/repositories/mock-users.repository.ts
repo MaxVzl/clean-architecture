@@ -9,11 +9,13 @@ export class MockUsersRepository implements UsersRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.users.find((user) => user.id.value === id) || null;
+    return this.users.find((user) => user.id.props.value === id) || null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.users.find((user) => user.email === email) || null;
+    return (
+      this.users.find((user) => user.props.email.props.value === email) || null
+    );
   }
 
   async create(user: User): Promise<User> {
@@ -31,6 +33,6 @@ export class MockUsersRepository implements UsersRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.users = this.users.filter((user) => user.id.value !== id);
+    this.users = this.users.filter((user) => user.id.props.value !== id);
   }
 }
