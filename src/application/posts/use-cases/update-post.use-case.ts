@@ -15,7 +15,10 @@ export class UpdatePostUseCase {
     if (!existingPost) {
       throw new PostNotFoundException(id);
     }
-    existingPost.update(updatePostDto.title, updatePostDto.content);
+    existingPost.update({
+      title: updatePostDto.title,
+      content: updatePostDto.content,
+    });
     const updatedPost = await this.postsRepository.update(existingPost);
     this.loggerService.log(`Updated post ${updatedPost.id.props.value}`);
     return updatedPost;

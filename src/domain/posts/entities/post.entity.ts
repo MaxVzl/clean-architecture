@@ -53,7 +53,11 @@ export class Post extends Entity<PostProps> {
     return new Post(props, id);
   }
 
-  public update(title: string, content: string): void {
-    this.props = { ...this.props, title, content, updatedAt: new Date() };
+  public update(props: Partial<PostProps>): void {
+    this.props = {
+      ...this.props,
+      ...props,
+      updatedAt: new Date(),
+    };
   }
 }
