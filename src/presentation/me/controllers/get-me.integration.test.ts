@@ -6,15 +6,18 @@ import { expect, test } from 'vitest';
 
 test('get me integration with valid user id', async () => {
   const usersRepo = diContainer.get('UsersRepository');
-  const userToCreate = User.create('John Doe', 'john@test.com', false, null);
+  const userToCreate = User.create({
+    name: 'John Doe',
+    email: 'john@test.com',
+  });
   await usersRepo.create(userToCreate);
-  loginAs(diContainer, userToCreate.id.value);
+  loginAs(diContainer, userToCreate.id.props.value);
   const app = createApp(diContainer);
   const response = await app.request('/me');
   expect(response.status).toBe(200);
   const me = await response.json();
   expect(me).toBeDefined();
-  expect(me.id).toBe(userToCreate.id.value);
+  expect(me.id).toBe(userToCreate.id.props.value);
 });
 
 test('get me integration with no user found', async () => {
