@@ -4,6 +4,7 @@ import { postsTable } from '@/infrastructure/database/schemas/drizzle-post.schem
 import { eq } from 'drizzle-orm';
 import { DrizzlePostMapper } from '@/infrastructure/persistence/posts/mappers/drizzle-post.mapper';
 import { type DrizzleConnection } from '@/infrastructure/database';
+import type { UUID } from '@/domain/common/value-objects/uuid.vo';
 
 export class DrizzlePostsRepository implements PostsRepository {
   constructor(private readonly db: DrizzleConnection) {}
@@ -13,11 +14,11 @@ export class DrizzlePostsRepository implements PostsRepository {
     return posts.map((post) => DrizzlePostMapper.toDomain(post));
   }
 
-  async findById(id: string): Promise<Post | null> {
+  async findById(id: UUID): Promise<Post | null> {
     const post = await this.db
       .select()
       .from(postsTable)
-      .where(eq(postsTable.id, id));
+      .where(eq(postsTable.id, id.props.value));
 
     if (post.length === 0) {
       return null;
@@ -26,11 +27,11 @@ export class DrizzlePostsRepository implements PostsRepository {
     return DrizzlePostMapper.toDomain(post[0]);
   }
 
-  async findByUserId(userId: string): Promise<Post[]> {
+  async findByUserId(userId: UUID): Promise<Post[]> {
     const posts = await this.db
       .select()
       .from(postsTable)
-      .where(eq(postsTable.userId, userId));
+      .where(eq(postsTable.userId, userId.props.value));
     return posts.map((post) => DrizzlePostMapper.toDomain(post));
   }
 
@@ -53,7 +54,7 @@ export class DrizzlePostsRepository implements PostsRepository {
     return DrizzlePostMapper.toDomain(updatedUser);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.db.delete(postsTable).where(eq(postsTable.id, id));
+  async delete(id: UUID): Promise<void> {
+    await this.db.delete(postsTable).where(eq(postsTable.id, id.props.value));
   }
 }

@@ -4,6 +4,7 @@ import { Post } from '@/domain/posts/entities/post.entity';
 import type { PostsRepository } from '@/domain/posts/repositories/posts.repository';
 import type { UsersRepository } from '@/domain/users/repositories/users.repository';
 import { UserNotFoundException } from '@/domain/users/exceptions/user-not-found.exception';
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
 
 export class CreatePostUseCase {
   constructor(
@@ -13,7 +14,9 @@ export class CreatePostUseCase {
   ) {}
 
   async execute(createPostDto: CreatePostDto) {
-    const user = await this.usersRepository.findById(createPostDto.userId);
+    const user = await this.usersRepository.findById(
+      UUID.create(createPostDto.userId),
+    );
     if (!user) {
       throw new UserNotFoundException(createPostDto.userId);
     }
@@ -23,7 +26,7 @@ export class CreatePostUseCase {
       userId: user.id.props.value,
     });
     const createdPost = await this.postsRepository.create(post);
-    this.loggerService.log(`Created post ${createdPost.id}`);
+    this.loggerService.log(`Created post ${createdPost.id.props.value}`);
     return createdPost;
   }
 }

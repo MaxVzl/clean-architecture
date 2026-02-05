@@ -1,3 +1,4 @@
+import type { UUID } from '@/domain/common/value-objects/uuid.vo';
 import { Post } from '@/domain/posts/entities/post.entity';
 import type { PostsRepository } from '@/domain/posts/repositories/posts.repository';
 
@@ -8,14 +9,12 @@ export class MockPostsRepository implements PostsRepository {
     return this.posts;
   }
 
-  async findById(id: string): Promise<Post | null> {
-    return this.posts.find((post) => post.id.props.value === id) || null;
+  async findById(id: UUID): Promise<Post | null> {
+    return this.posts.find((post) => post.id.equals(id)) || null;
   }
 
-  async findByUserId(userId: string): Promise<Post[]> {
-    return this.posts.filter(
-      (post) => post.props.userId.props.value === userId,
-    );
+  async findByUserId(userId: UUID): Promise<Post[]> {
+    return this.posts.filter((post) => post.props.userId.equals(userId));
   }
 
   async create(post: Post): Promise<Post> {
@@ -32,7 +31,7 @@ export class MockPostsRepository implements PostsRepository {
     return post;
   }
 
-  async delete(id: string): Promise<void> {
-    this.posts = this.posts.filter((post) => post.id.props.value !== id);
+  async delete(id: UUID): Promise<void> {
+    this.posts = this.posts.filter((post) => !post.id.equals(id));
   }
 }

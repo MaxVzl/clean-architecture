@@ -55,10 +55,18 @@ export class User extends Entity<UserProps> {
     return new User(props, id);
   }
 
-  public changeEmail(email: Email): void {
+  // public changeEmail(email: Email): void {
+  //   this.props = {
+  //     ...this.props,
+  //     email: email,
+  //     updatedAt: new Date(),
+  //   };
+  // }
+
+  public update(props: Partial<UserProps>): void {
     this.props = {
       ...this.props,
-      email: email,
+      ...props,
       updatedAt: new Date(),
     };
   }

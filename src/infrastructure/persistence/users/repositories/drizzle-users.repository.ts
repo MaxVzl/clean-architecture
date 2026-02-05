@@ -4,6 +4,8 @@ import { usersTable } from '@/infrastructure/database/schemas/drizzle-user.schem
 import { eq } from 'drizzle-orm';
 import { DrizzleUserMapper } from '@/infrastructure/persistence/users/mappers/drizzle-user.mapper';
 import { type DrizzleConnection } from '@/infrastructure/database';
+import type { UUID } from '@/domain/common/value-objects/uuid.vo';
+import type { Email } from '@/domain/common/value-objects/email.vo';
 
 export class DrizzleUsersRepository implements UsersRepository {
   constructor(private readonly db: DrizzleConnection) {}
@@ -13,11 +15,11 @@ export class DrizzleUsersRepository implements UsersRepository {
     return users.map((user) => DrizzleUserMapper.toDomain(user));
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: UUID): Promise<User | null> {
     const user = await this.db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.id, id));
+      .where(eq(usersTable.id, id.props.value));
 
     if (user.length === 0) {
       return null;
@@ -26,11 +28,11 @@ export class DrizzleUsersRepository implements UsersRepository {
     return DrizzleUserMapper.toDomain(user[0]);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: Email): Promise<User | null> {
     const user = await this.db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.email, email));
+      .where(eq(usersTable.email, email.props.value));
     if (user.length === 0) {
       return null;
     }
@@ -56,7 +58,7 @@ export class DrizzleUsersRepository implements UsersRepository {
     return DrizzleUserMapper.toDomain(updatedUser);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.db.delete(usersTable).where(eq(usersTable.id, id));
+  async delete(id: UUID): Promise<void> {
+    await this.db.delete(usersTable).where(eq(usersTable.id, id.props.value));
   }
 }
