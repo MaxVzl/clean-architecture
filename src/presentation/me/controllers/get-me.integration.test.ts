@@ -1,3 +1,4 @@
+import { UUID } from '@/domain/common/value-objects/uuid.vo';
 import { User } from '@/domain/users/entities/user.entity';
 import { createApp } from '@/presentation/app';
 import { loginAs } from 'tests/helpers/auth.helper';
@@ -21,7 +22,7 @@ test('get me integration with valid user id', async () => {
 });
 
 test('get me integration with no user found', async () => {
-  loginAs(diContainer, 'no-user-found');
+  loginAs(diContainer, UUID.generate().props.value);
   const app = createApp(diContainer);
   const response = await app.request('/me');
   expect(response.status).toBe(404);
