@@ -23,7 +23,7 @@ export class CreatePostUseCase {
     const post = Post.create({
       title: createPostDto.title,
       content: createPostDto.content,
-      userId: user.id.props.value,
+      userId: createPostDto.userId,
     });
     const createdPost = await this.postsRepository.create(post);
     this.loggerService.log(`Created post ${createdPost.id.props.value}`);
