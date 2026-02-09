@@ -42,7 +42,9 @@ export class Post extends Entity<PostProps> {
     return new Post(props, id);
   }
 
-  public update(props: Partial<PostProps>): void {
+  public update(
+    props: Omit<Partial<PostProps>, 'createdAt' | 'updatedAt'>,
+  ): void {
     this.props = {
       ...this.props,
       ...props,

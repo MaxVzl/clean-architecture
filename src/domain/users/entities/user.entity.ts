@@ -52,7 +52,9 @@ export class User extends Entity<UserProps> {
   //   };
   // }
 
-  public update(props: Partial<UserProps>): void {
+  public update(
+    props: Omit<Partial<UserProps>, 'createdAt' | 'updatedAt'>,
+  ): void {
     this.props = {
       ...this.props,
       ...props,
