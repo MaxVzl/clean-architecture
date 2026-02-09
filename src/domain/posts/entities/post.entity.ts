@@ -8,7 +8,7 @@ export const createPostSchema = z.object({
   userId: z.string(),
 });
 
-export type CreatePostDTO = z.infer<typeof createPostSchema>;
+export type CreatePostProps = z.infer<typeof createPostSchema>;
 
 interface PostProps {
   title: string;
@@ -23,25 +23,14 @@ export class Post extends Entity<PostProps> {
     super(props, id);
   }
 
-  static create(props: CreatePostDTO, id?: UUID): Post {
-    const result = createPostSchema.safeParse(props);
-
-    if (!result.success) {
-      const errorMessage = result.error.issues
-        .map((issue) => issue.message)
-        .join(', ');
-      throw new Error(`Validation Post échouée : ${errorMessage}`);
-    }
-
-    const data = result.data;
-
-    const userIdVO = UUID.create(data.userId);
+  static create(props: CreatePostProps, id?: UUID): Post {
+    const data = this.validate(createPostSchema, props, 'Post');
 
     return new Post(
       {
         title: data.title,
         content: data.content,
-        userId: userIdVO,
+        userId: UUID.create(data.userId),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

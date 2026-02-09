@@ -1,14 +1,14 @@
 import { Entity } from '@/domain/common/entity';
-import { Email, emailSchema } from '@/domain/common/value-objects/email.vo';
+import { Email } from '@/domain/common/value-objects/email.vo';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
 import { z } from 'zod';
 
 export const createUserSchema = z.object({
   name: z.string().min(1),
-  email: emailSchema,
+  email: z.string().min(1),
 });
 
-export type CreateUserDTO = z.infer<typeof createUserSchema>;
+export type CreateUserProps = z.infer<typeof createUserSchema>;
 
 interface UserProps {
   name: string;
@@ -24,24 +24,13 @@ export class User extends Entity<UserProps> {
     super(props, id);
   }
 
-  static create(props: CreateUserDTO, id?: UUID): User {
-    const result = createUserSchema.safeParse(props);
-
-    if (!result.success) {
-      const errorMessage = result.error.issues
-        .map((issue) => issue.message)
-        .join(', ');
-      throw new Error(`Validation User échouée : ${errorMessage}`);
-    }
-
-    const data = result.data;
-
-    const emailVO = Email.create(data.email);
+  static create(props: CreateUserProps, id?: UUID): User {
+    const data = this.validate(createUserSchema, props, 'User');
 
     return new User(
       {
         name: data.name,
-        email: emailVO,
+        email: Email.create(data.email),
         emailVerified: false,
         image: null,
         createdAt: new Date(),
