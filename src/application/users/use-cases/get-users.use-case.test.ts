@@ -6,9 +6,9 @@ import { expect, test, vi } from 'vitest';
 
 test('GetUsersUseCase', async () => {
   const mockUsers = [
-    User.create('User 1', 'user1@example.com', true, null),
-    User.create('User 2', 'user2@example.com', true, null),
-    User.create('User 3', 'user3@example.com', false, null),
+    User.create({ name: 'User 1', email: 'user1@example.com' }),
+    User.create({ name: 'User 2', email: 'user2@example.com' }),
+    User.create({ name: 'User 3', email: 'user3@example.com' }),
   ];
 
   const mockUsersRepository: UsersRepository = {

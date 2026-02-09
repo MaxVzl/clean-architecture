@@ -1,29 +1,16 @@
-import { UUIDRequiredException } from '@/domain/common/exceptions/uuid-required.exception';
+import { ValueObject } from '@/domain/common/value-object';
 import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
 
-export class UUID {
-  constructor(public readonly value: string) {
-    this.ensureIsValidUuid(value);
+export const uuidSchema = z.uuidv4();
+
+export class UUID extends ValueObject<{ value: string }> {
+  public static create(value: string): UUID {
+    const data = this.validate(uuidSchema, value, 'UUID');
+    return new UUID({ value: data });
   }
 
-  static generate(): UUID {
-    return new UUID(uuidv4());
-  }
-
-  private ensureIsValidUuid(id: string): void {
-    if (!id) {
-      throw new UUIDRequiredException(id);
-    }
-    // if (!validate(id)) {
-    //   throw new UUIDInvalidFormatException(id)
-    // }
-  }
-
-  public equals(other: UUID): boolean {
-    return this.value === other.value;
-  }
-
-  public toString(): string {
-    return this.value;
+  public static generate(): UUID {
+    return new UUID({ value: uuidv4() });
   }
 }

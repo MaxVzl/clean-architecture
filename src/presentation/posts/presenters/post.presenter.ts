@@ -4,12 +4,12 @@ import type { PostSchema } from '@/presentation/posts/schemas/post.schema';
 export class PostPresenter {
   static toResponse(post: Post): PostSchema {
     return {
-      id: post.id.value,
-      title: post.title,
-      content: post.content,
-      userId: post.userId.value,
-      createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
+      id: post.id.props.value,
+      title: post.props.title,
+      content: post.props.content,
+      userId: post.props.userId.props.value,
+      createdAt: post.props.createdAt,
+      updatedAt: post.props.updatedAt,
     };
   }
 }

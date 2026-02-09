@@ -16,7 +16,10 @@ test('get users integration with no users', async () => {
 
 test('get users integration with users', async () => {
   const usersRepo = diContainer.get('UsersRepository');
-  const userToCreate = User.create('John Doe', 'john@test.com', false, null);
+  const userToCreate = User.create({
+    name: 'John Doe',
+    email: 'john@test.com',
+  });
   await usersRepo.create(userToCreate);
   loginAs(diContainer);
   const app = createApp(diContainer);

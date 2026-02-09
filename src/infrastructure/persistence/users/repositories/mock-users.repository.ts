@@ -1,3 +1,5 @@
+import type { Email } from '@/domain/common/value-objects/email.vo';
+import type { UUID } from '@/domain/common/value-objects/uuid.vo';
 import { User } from '@/domain/users/entities/user.entity';
 import type { UsersRepository } from '@/domain/users/repositories/users.repository';
 
@@ -8,12 +10,12 @@ export class MockUsersRepository implements UsersRepository {
     return this.users;
   }
 
-  async findById(id: string): Promise<User | null> {
-    return this.users.find((user) => user.id.value === id) || null;
+  async findById(id: UUID): Promise<User | null> {
+    return this.users.find((user) => user.id.equals(id)) || null;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return this.users.find((user) => user.email === email) || null;
+  async findByEmail(email: Email): Promise<User | null> {
+    return this.users.find((user) => user.props.email.equals(email)) || null;
   }
 
   async create(user: User): Promise<User> {
@@ -30,7 +32,7 @@ export class MockUsersRepository implements UsersRepository {
     return user;
   }
 
-  async delete(id: string): Promise<void> {
-    this.users = this.users.filter((user) => user.id.value !== id);
+  async delete(id: UUID): Promise<void> {
+    this.users = this.users.filter((user) => !user.id.equals(id));
   }
 }
