@@ -1,6 +1,6 @@
 import { Entity } from '@/domain/common/entity';
 import { UUID } from '@/domain/common/value-objects/uuid.vo';
-import z from 'zod';
+import { z } from 'zod';
 
 export const createPostSchema = z.object({
   title: z.string().min(1),
