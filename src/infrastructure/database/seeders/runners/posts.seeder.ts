@@ -1,9 +1,10 @@
+import type { DrizzleConnection } from '@/infrastructure/database';
 import { postsTable } from '@/infrastructure/database/schemas/drizzle-post.schema';
 import { usersTable } from '@/infrastructure/database/schemas/drizzle-user.schema';
-import { db } from '@/infrastructure/database/seeders/main.seeder';
+import { createPostFactory } from '@/infrastructure/database/seeders/factories/post.factory';
 import { faker } from '@faker-js/faker';
 
-export const seedPosts = async (maxPostsPerUser = 5) => {
+export const seedPosts = async (db: DrizzleConnection, maxPostsPerUser = 5) => {
   console.log('📝 Seeding posts...');
 
   const users = await db.select({ id: usersTable.id }).from(usersTable);
@@ -19,14 +20,7 @@ export const seedPosts = async (maxPostsPerUser = 5) => {
     const numberOfPosts = faker.number.int({ min: 1, max: maxPostsPerUser });
 
     for (let i = 0; i < numberOfPosts; i++) {
-      posts.push({
-        id: faker.string.uuid(),
-        title: faker.lorem.sentence(),
-        content: faker.lorem.paragraphs(2),
-        userId: user.id,
-        createdAt: faker.date.past().toISOString(),
-        updatedAt: faker.date.recent().toISOString(),
-      });
+      posts.push(createPostFactory(user.id));
     }
   }
 

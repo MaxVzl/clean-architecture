@@ -10,6 +10,6 @@ export const createPostFactory = (userId: string): NewPost => {
     content: faker.lorem.paragraphs(2),
     userId,
     createdAt: faker.date.past().toISOString(),
-    updatedAt: faker.date.past().toISOString(),
+    updatedAt: faker.date.recent().toISOString(),
   };
 };

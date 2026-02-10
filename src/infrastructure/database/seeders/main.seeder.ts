@@ -10,7 +10,7 @@ if (!databaseUrl) {
   throw new Error('DB_FILE_NAME environment variable is required');
 }
 
-export const db = createDatabase(databaseUrl);
+const db = createDatabase(databaseUrl);
 
 const resetDatabase = async () => {
   await db.delete(postsTable).execute();
@@ -23,8 +23,8 @@ const main = async () => {
 
     await resetDatabase();
 
-    await seedUsers(10);
-    await seedPosts(5);
+    await seedUsers(db, 10);
+    await seedPosts(db, 5);
 
     console.log('✅ --- Seeding Terminé ---');
     process.exit(0);
